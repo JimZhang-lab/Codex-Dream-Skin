@@ -17,6 +17,16 @@ It does **not** grant rights to:
 
 `assets/portal-hero.png` is original abstract geometric art generated for this open-source repository (no characters). Replace it with your own image before shipping a branded theme to customers.
 
+## Miku Future custom pet
+
+The optional `pets/miku-future` package was ported from
+[`HeiGeAi/heige-codex-skin-studio`](https://github.com/HeiGeAi/heige-codex-skin-studio)
+at commit `37091c1ebbf84d45a000cac793ab4885f04d108a`. The source repository's
+MIT license covers its software, but does not grant rights to Hatsune Miku
+trademarks, character designs, or artwork. The pet is included for personal
+theming and demonstration; replace or remove it if your distribution requires
+different rights.
+
 ## Runtime
 
 This project does not redistribute Node.js. At runtime it validates and uses the Node.js executable already signed and bundled inside the user's official Codex desktop application.

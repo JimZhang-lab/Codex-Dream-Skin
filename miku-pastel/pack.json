@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "miku-pastel",
+  "name": "Miku Pastel",
+  "packageVersion": "1.2.1",
+  "engineVersion": "1.4.1",
+  "minimumEngineVersion": "1.4.1",
+  "platform": "macOS",
+  "applyMode": "loopback-cdp",
+  "themeFile": "theme/theme.json",
+  "runtimeAssets": [
+    "assets/miku-pastel-wallpaper.png",
+    "assets/background-hero.png",
+    "assets/miku.png",
+    "assets/01_code_icon.png",
+    "assets/02_puzzle_icon.png",
+    "assets/03_checklist_icon.png",
+    "assets/04_tools_icon.png",
+    "assets/miku-future-spritesheet.webp"
+  ],
+  "visualReference": "references/effect-reference.png",
+  "checksums": {
+    "wallpaperSha256": "9b6e9e367b60aaf372f9d37ef4df8c49d8f159c260ebfa5ab3bf3acbe96529cb",
+    "backgroundSha256": "5c8afe0b2fa0403c988e7d55b3182499964856285c935a0dad805342ca4340be",
+    "characterSha256": "84c96ba86bab705fdcd9b46702e6abaa5dde34b652ad9d350c347bd4b7282e34",
+    "codeIconSha256": "52e036cf7b3c2c78ad2654c5007cb294d219a3d2b9f489935e6cf545659b167c",
+    "puzzleIconSha256": "230c94451c66e398c29114a00ec3690a047e51091d3106bbce395bd6841f5428",
+    "checklistIconSha256": "714f3fb49d0726554544f71222ba43d38f093f9b091769c6d00a68efb41eabba",
+    "toolsIconSha256": "62a20a0e023c788d2b01d6438324857a4c934d455e1bb80835d0b2a508a4b01f",
+    "petSpritesheetSha256": "3452954a055640cc6b116f4d4c99c0dbf8928674899900ccb238bc2601ba41ec",
+    "effectReferenceSha256": "8484741839113cd870f83b07deaedadbffb1190bf22fbc91b8633375e86b0a58"
+  }
+}
