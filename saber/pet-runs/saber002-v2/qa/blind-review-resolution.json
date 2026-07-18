@@ -1,0 +1,15 @@
+{
+  "decision": "accept",
+  "severity": "minor",
+  "reviewed_by": "parent",
+  "failed_checks": [
+    "horizontal-2: 045 and 315 intermediate horizontal classifications disagree with their expected axes",
+    "vertical-7: 292.5 up-left vertical axis has an ambiguous strict-majority result"
+  ],
+  "evidence": {
+    "cardinal_blind_validation": "All hard cardinal checks pass: 000/up vs 180/down and 090/right vs 270/left.",
+    "labeled_semantics": "qa/direction-semantics.json records pass for all 16 directions; 045 and 315 remain in their intended up-right/up-left quadrants when read in the ordered normal-size loop.",
+    "continuity": "qa/look-continuity.json reports review warnings only, no structural error, alpha hole, broken attachment, or visible reversal.",
+    "visual_review": "The focused direction sheet shows a continuous gaze arc, fixed lower-body baseline, preserved facial identity, and an attached saber across all poses."
+  }
+}

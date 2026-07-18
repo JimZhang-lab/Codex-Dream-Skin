@@ -1,0 +1,1 @@
+running-left generation decision: do not mirror running-right. The navy ribbon bow and side-visible dress details are asymmetric; a direct mirror would move them to the wrong side and compromise the reference identity.

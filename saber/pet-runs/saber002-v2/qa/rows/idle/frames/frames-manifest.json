@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "chroma_key": {
+    "hex": "#00FFFF",
+    "rgb": [
+      0,
+      255,
+      255
+    ],
+    "threshold": 96.0
+  },
+  "rows": [
+    {
+      "state": "idle",
+      "frames": [
+        "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber002-v2/qa/rows/idle/frames/idle/00.png",
+        "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber002-v2/qa/rows/idle/frames/idle/01.png",
+        "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber002-v2/qa/rows/idle/frames/idle/02.png",
+        "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber002-v2/qa/rows/idle/frames/idle/03.png",
+        "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber002-v2/qa/rows/idle/frames/idle/04.png",
+        "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber002-v2/qa/rows/idle/frames/idle/05.png"
+      ],
+      "method": "components"
+    }
+  ]
+}

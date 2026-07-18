@@ -4,6 +4,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
 NODE="${NODE:-/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node}"
 [ -x "$NODE" ] || { printf 'Codex bundled Node.js was not found: %s\n' "$NODE" >&2; exit 1; }
+THEME_JSON="$ROOT/../theme/theme.json"
+[ -f "$THEME_JSON" ] || THEME_JSON="$ROOT/../miku-pastel/theme/theme.json"
 
 while IFS= read -r file; do /bin/bash -n "$file"; done < <(
   /usr/bin/find "$ROOT" -type f \( -name '*.sh' -o -name '*.command' \) \
@@ -33,6 +35,10 @@ fi
 /usr/bin/grep -F -- 'bottom: 22px !important;' \
   "$ROOT/assets/dream-skin.css" >/dev/null
 /usr/bin/grep -F -- '.dream-miku-window-pet-sprite' \
+  "$ROOT/assets/dream-skin.css" >/dev/null
+/usr/bin/grep -F -- '.dream-miku-window-pet-viewport' \
+  "$ROOT/assets/dream-skin.css" >/dev/null
+/usr/bin/grep -F -- 'will-change: transform;' \
   "$ROOT/assets/dream-skin.css" >/dev/null
 /usr/bin/grep -F -- 'display: block !important;' \
   "$ROOT/assets/dream-skin.css" >/dev/null
@@ -94,6 +100,33 @@ fi
   "$ROOT/assets/renderer-inject.js" >/dev/null
 /usr/bin/grep -F -- 'const timer = setInterval(runEnsure, 8000);' \
   "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'const PET_CONTROLLERS_KEY = "__CODEX_DREAM_SKIN_PET_CONTROLLERS__";' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'const shouldShowPet = Boolean(petUrl && !nativePetOverlay && !moduleOpen);' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'const nativePetOverlay = PET_CONFIG?.replaceNativeOverlay === false;' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'input#pet-size[type="range"]' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- '"replaceNativeOverlay": false' \
+  "$THEME_JSON" >/dev/null
+if /usr/bin/grep -R -n -E 'dream-miku-pet-bubble|dream-miku-pet-settings-card|dream-miku-pet-settings-range' \
+  "$ROOT/assets" "$ROOT/scripts" >/dev/null; then
+  printf 'Miku Pet bubble and size controls must remain Codex-native.\n' >&2
+  exit 1
+fi
+/usr/bin/grep -F -- 'projectConversationAvatar.nativeOverlay' \
+  "$ROOT/tests/audit-live-dom.mjs" >/dev/null
+/usr/bin/grep -F -- 'window[PET_CONTROLLERS_KEY].add(controller);' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'window[STATE_KEY].petController = petController;' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'if (performance.now() - this.runningMissingSince < 1600) return;' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'setStyleIfChanged(sprite, "transform", `translate3d(${x}%, ${y}%, 0)`);' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'projectConversationAvatar.controllerCount === 1' \
+  "$ROOT/tests/audit-live-dom.mjs" >/dev/null
 /usr/bin/grep -F -- 'button.classList.toggle("dream-miku-composer-stop", isStopping);' \
   "$ROOT/assets/renderer-inject.js" >/dev/null
 /usr/bin/grep -F -- "const isPrimaryButton = button.matches?.('[class~=\"bg-token-foreground\"]');" \
@@ -106,7 +139,15 @@ fi
   "$ROOT/assets/dream-skin.css" >/dev/null
 /usr/bin/grep -F -- 'await session.send("Page.close").catch(() => {});' \
   "$ROOT/scripts/injector.mjs" >/dev/null
-/usr/bin/grep -F -- 'homeScroll.present && homeScroll.locked' \
+/usr/bin/grep -F -- 'input#pet-size[type="range"]' \
+  "$ROOT/tests/audit-live-dom.mjs" >/dev/null
+/usr/bin/grep -F -- 'Dark task shell — Markdown, TeX, file viewers and review diffs' \
+  "$ROOT/assets/dream-skin.css" >/dev/null
+/usr/bin/grep -F -- '--vscode-editor-background: #0b1e28;' \
+  "$ROOT/assets/dream-skin.css" >/dev/null
+/usr/bin/grep -F -- 'const isMikuPastel = (THEME.preset || "classic") === "miku-pastel";' \
+  "$ROOT/assets/renderer-inject.js" >/dev/null
+/usr/bin/grep -F -- 'tokens.editorForeground.toLowerCase() === "#e9fbfd"' \
   "$ROOT/tests/audit-live-dom.mjs" >/dev/null
 
 DEFAULT_PAYLOAD_JSON="$("$NODE" "$ROOT/scripts/injector.mjs" --check-payload)"
@@ -150,7 +191,7 @@ BACKUP="$TMP/theme-backup.json"
 "$NODE" "$ROOT/scripts/theme-config.mjs" restore "$CONFIG" "$BACKUP" >/dev/null
 /usr/bin/cmp -s "$CONFIG" "$TMP/original.toml"
 
-/usr/bin/env -u HOME /bin/bash -c '. "$1/scripts/common-macos.sh"; [ -n "$HOME" ] && [ "$SKIN_VERSION" = "1.4.1" ]' _ "$ROOT"
+/usr/bin/env -u HOME /bin/bash -c '. "$1/scripts/common-macos.sh"; [ -n "$HOME" ] && [ "$SKIN_VERSION" = "1.4.7" ]' _ "$ROOT"
 DOCTOR_HOME="$TMP/doctor-home"
 /bin/mkdir -p "$DOCTOR_HOME/.codex"
 /bin/cp "$CONFIG" "$DOCTOR_HOME/.codex/config.toml"

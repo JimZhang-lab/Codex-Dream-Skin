@@ -142,12 +142,18 @@ const expression = `(() => {
   const petElement = document.querySelector(
     "#codex-dream-skin-chrome .dream-miku-window-pet"
   );
+  const petViewport = petElement?.querySelector(".dream-miku-window-pet-viewport");
   const petSprite = petElement?.querySelector(".dream-miku-window-pet-sprite");
+  const petSizeControl = document.querySelector('input#pet-size[type="range"]');
   const petRect = petElement?.getBoundingClientRect();
   const petStyle = petElement ? getComputedStyle(petElement) : null;
   const petSpriteStyle = petSprite ? getComputedStyle(petSprite) : null;
   const projectConversationAvatar = {
     present: Boolean(petElement),
+    nativeOverlay: Boolean(window.__CODEX_DREAM_SKIN_STATE__?.nativePetOverlay),
+    viewportPresent: Boolean(petViewport),
+    controllerCount: window.__CODEX_DREAM_SKIN_PET_CONTROLLERS__?.size ?? 0,
+    exportedController: Boolean(window.__CODEX_DREAM_SKIN_STATE__?.petController),
     display: petStyle?.display ?? null,
     visibility: petStyle?.visibility ?? null,
     opacity: petStyle?.opacity ?? null,
@@ -158,6 +164,11 @@ const expression = `(() => {
     boxShadow: petStyle?.boxShadow ?? petSpriteStyle?.boxShadow ?? null,
     pointerEvents: petStyle?.pointerEvents ?? null,
     state: petElement?.dataset.dreamPetState ?? null,
+    bubblePresent: false,
+    bubbleVisible: false,
+    bubbleState: null,
+    bubbleText: "",
+    size: Number(petElement?.dataset.dreamPetSize ?? 0),
     visible: Boolean(
       petElement &&
       petStyle?.display !== "none" &&
@@ -179,6 +190,7 @@ const expression = `(() => {
       !petRect?.width ||
       !petRect?.height
     )),
+    homeSurface: Boolean(homeElement),
   };
   const tokens = {
     editorForeground: rootStyle.getPropertyValue("--color-token-editor-foreground").trim(),
@@ -213,13 +225,20 @@ const expression = `(() => {
     colorScheme: rootStyle.colorScheme,
     panelColor: rootStyle.getPropertyValue("--miku-settings-panel").trim(),
     textColor: settingsCardStyle?.color ?? null,
+    petSizeControl: Boolean(petSizeControl),
+    petSizeValue: petSizeControl?.value ?? null,
     contrast: settingsCardStyle
       ? contrast(settingsCardStyle.color, rootStyle.getPropertyValue("--miku-settings-panel").trim())
       : null,
   };
   const mikuEditorPass = installedPreset !== "miku-pastel" || (
-    tokens.editorForeground.toLowerCase() === "#263f47" &&
-    tokens.preformatForeground.toLowerCase() === "#31545d" &&
+    (document.documentElement.getAttribute("data-dream-shell") === "dark"
+      ? tokens.editorForeground.toLowerCase() === "#e9fbfd" &&
+        tokens.editorBackground.toLowerCase() === "#0b1e28" &&
+        tokens.preformatForeground.toLowerCase() === "#d7f3f5"
+      : tokens.editorForeground.toLowerCase() === "#263f47" &&
+        tokens.editorBackground.toLowerCase() === "#fbfeff" &&
+        tokens.preformatForeground.toLowerCase() === "#31545d") &&
     tokens.terminalBackground !== tokens.terminalForeground
   );
   const settingsPass = !settings.active || (
@@ -258,14 +277,19 @@ const expression = `(() => {
         sidebarNavigation.nativeLabelsVisible &&
         sidebarSetupCardCount === 0
       )) &&
-      (settings.active || homeScroll.present || installedPreset !== "miku-pastel" || (
-        moduleOpen
-          ? projectConversationAvatar.hiddenForModule
-          : projectConversationAvatar.visible &&
-            projectConversationAvatar.backgroundImage !== "none" &&
-            projectConversationAvatar.filter === "none" &&
-            projectConversationAvatar.boxShadow === "none" &&
-            projectConversationAvatar.pointerEvents === "auto"
+      (installedPreset !== "miku-pastel" || (
+        projectConversationAvatar.nativeOverlay
+          ? !projectConversationAvatar.present && !projectConversationAvatar.bubblePresent
+          : moduleOpen
+            ? projectConversationAvatar.hiddenForModule
+            : projectConversationAvatar.visible &&
+              projectConversationAvatar.viewportPresent &&
+              projectConversationAvatar.controllerCount === 1 &&
+              projectConversationAvatar.exportedController &&
+              projectConversationAvatar.backgroundImage !== "none" &&
+              projectConversationAvatar.filter === "none" &&
+              projectConversationAvatar.boxShadow === "none" &&
+              projectConversationAvatar.pointerEvents === "auto"
       )) &&
       mikuEditorPass &&
       (style.sheet?.cssRules?.length ?? 0) >= 100,

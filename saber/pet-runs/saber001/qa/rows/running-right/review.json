@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "frames_root": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames",
+  "states": [
+    "running-right"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "running-right",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 17860,
+          "bbox": [
+            23,
+            5,
+            169,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 424
+        },
+        {
+          "index": 1,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19858,
+          "bbox": [
+            18,
+            5,
+            173,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 491
+        },
+        {
+          "index": 2,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 18401,
+          "bbox": [
+            18,
+            5,
+            174,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 530
+        },
+        {
+          "index": 3,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19902,
+          "bbox": [
+            13,
+            5,
+            178,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 528
+        },
+        {
+          "index": 4,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 18938,
+          "bbox": [
+            19,
+            5,
+            172,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 533
+        },
+        {
+          "index": 5,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 18780,
+          "bbox": [
+            19,
+            5,
+            172,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 491
+        },
+        {
+          "index": 6,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19077,
+          "bbox": [
+            20,
+            5,
+            172,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 569
+        },
+        {
+          "index": 7,
+          "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/qa/rows/running-right/frames/running-right/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19781,
+          "bbox": [
+            16,
+            5,
+            175,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 596
+        }
+      ]
+    }
+  ]
+}

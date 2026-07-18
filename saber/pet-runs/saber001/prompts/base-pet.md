@@ -1,0 +1,7 @@
+Create one clean full-body reference sprite for Codex pet saber001.
+
+Pet identity: Reference identity: an elegant anime-inspired blonde young woman with soft green eyes, braided updo and loose bangs, ivory-white strapless ball gown, long white gloves, and a dark navy ribbon bow. Translate her into a compact full-body chibi pet with a gentle poised expression; preserve the blonde hair, green eyes, ivory dress, navy bow, and refined silhouette. Do not copy the card frame, 04 badge, Royal Elegance text, scenery, or any text. Use a clean 2D anime sprite style on a perfectly flat chroma-key background..
+Style: Pet-safe sprite: compact full-body mascot, readable in a 192x208 cell, clear silhouette, simple face, stable palette/materials, and crisp edges for chroma-key extraction. Style `auto`: Infer the most appropriate pet-safe style from the user request and reference images, then keep that exact style consistent across every row. User style notes: 2D anime chibi sprite, polished cel shading, rounded readable silhouette, elegant but lively, no props or logos..
+
+
+Place a single centered pose on a perfectly flat pure green #00FF00 chroma-key background. Keep the full pet visible, compact, readable at 192x208, and easy to animate. Preserve approved reference identity cues. No scenery, text, borders, checkerboard transparency, shadows, glows, detached effects, or extra props. Keep #00FF00 and close colors out of the pet, props, highlights, and effects.

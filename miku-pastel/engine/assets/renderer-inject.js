@@ -8,6 +8,7 @@
   const SETTINGS_ATTR = "data-dream-settings";
   const MODULE_ATTR = "data-dream-module-open";
   const PET_POSITION_KEY = "codex-dream-skin:miku-pet-position:v1";
+  const PET_CONTROLLERS_KEY = "__CODEX_DREAM_SKIN_PET_CONTROLLERS__";
   const VERSION = __DREAM_SKIN_VERSION_JSON__;
   const THEME = themeConfig && typeof themeConfig === "object" ? themeConfig : {};
   const THEME_VARIABLES = [
@@ -29,7 +30,19 @@
   if (previous?.artUrl) URL.revokeObjectURL(previous.artUrl);
   if (previous?.sceneUrl) URL.revokeObjectURL(previous.sceneUrl);
   if (previous?.characterUrl) URL.revokeObjectURL(previous.characterUrl);
-  if (previous?.petController?.destroy) previous.petController.destroy();
+  const previousPetControllers = new Set();
+  if (previous?.petController?.destroy) previousPetControllers.add(previous.petController);
+  if (window[PET_CONTROLLERS_KEY] instanceof Set) {
+    for (const controller of window[PET_CONTROLLERS_KEY]) {
+      if (controller?.destroy) previousPetControllers.add(controller);
+    }
+  }
+  for (const controller of previousPetControllers) controller.destroy();
+  window[PET_CONTROLLERS_KEY] = new Set();
+  const legacyPetNode = document.querySelector(`#${CHROME_ID} .dream-miku-window-pet`);
+  if (legacyPetNode && !legacyPetNode.querySelector(".dream-miku-window-pet-viewport")) {
+    legacyPetNode.remove();
+  }
   if (previous?.petUrl) URL.revokeObjectURL(previous.petUrl);
   for (const url of previous?.cardIconUrls || []) URL.revokeObjectURL(url);
 
@@ -149,6 +162,7 @@
 
   const applyTheme = (root, shell) => {
     const colors = THEME.colors || {};
+    const isMikuPastel = (THEME.preset || "classic") === "miku-pastel";
     const accent = colors.accent || (shell === "light" ? "#e25563" : "#7cff46");
     const accentAlt = colors.accentAlt || accent;
     const secondary = colors.secondary || (shell === "light" ? "#f3a8af" : "#36d7e8");
@@ -170,16 +184,18 @@
       };
     } else {
       variables = {
-        "--ds-bg": colors.background || "#071116",
-        "--ds-panel": colors.panel || "#0b1a20",
-        "--ds-panel-2": colors.panelAlt || "#10272c",
+        // Miku's supplied palette is intentionally light. Do not carry its
+        // light backgrounds or dark text into Codex's native dark shell.
+        "--ds-bg": isMikuPastel ? "#07171e" : (colors.background || "#071116"),
+        "--ds-panel": isMikuPastel ? "#0d222b" : (colors.panel || "#0b1a20"),
+        "--ds-panel-2": isMikuPastel ? "#112b35" : (colors.panelAlt || "#10272c"),
         "--ds-green": accent,
         "--ds-lime": accentAlt,
         "--ds-cyan": secondary,
         "--ds-purple": highlight,
-        "--ds-text": colors.text || "#e9fff1",
-        "--ds-muted": colors.muted || "#9ebdb3",
-        "--ds-line": colors.line || "rgba(124, 255, 70, .28)",
+        "--ds-text": isMikuPastel ? "#e9fbfd" : (colors.text || "#e9fff1"),
+        "--ds-muted": isMikuPastel ? "#b6d7db" : (colors.muted || "#9ebdb3"),
+        "--ds-line": isMikuPastel ? "rgba(82, 218, 214, .28)" : (colors.line || "rgba(124, 255, 70, .28)"),
       };
     }
 
@@ -640,15 +656,22 @@
       document.querySelectorAll(".dream-miku-settings-card").forEach((node) => {
         node.classList.remove("dream-miku-settings-card");
       });
+      document.querySelectorAll("input.dream-miku-native-pet-size").forEach((node) => {
+        node.classList.remove("dream-miku-native-pet-size");
+      });
       return null;
     }
 
     root.setAttribute(SETTINGS_ATTR, "true");
     settingsSurface.classList.add("dream-miku-settings-surface");
     settingsSidebar.classList.add("dream-miku-settings-sidebar");
+    settingsSurface.querySelector("#dream-miku-pet-size")?.closest("section")?.remove();
     settingsSurface.querySelectorAll('[class~="rounded-2xl"][class~="border"]').forEach((node) => {
       node.classList.add("dream-miku-settings-card");
     });
+
+    const nativePetSize = settingsSurface.querySelector('input#pet-size[type="range"]');
+    nativePetSize?.classList.add("dream-miku-native-pet-size");
     return settingsSurface;
   };
 
@@ -680,10 +703,11 @@
     jumping: { row: 4, frames: 5, durations: [140, 140, 140, 140, 280] },
     failed: { row: 5, frames: 8, durations: [140, 140, 140, 140, 140, 140, 140, 240] },
     waiting: { row: 6, frames: 6, durations: [150, 150, 150, 150, 150, 260] },
-    running: { row: 7, frames: 6, durations: [120, 120, 120, 120, 120, 220] },
+    running: { row: 7, frames: 6, durations: [220, 170, 180, 220, 220, 420] },
     review: { row: 8, frames: 6, durations: [150, 150, 150, 150, 150, 280] },
   };
   const PET_CONFIG = THEME.pet && typeof THEME.pet === "object" ? THEME.pet : null;
+  const nativePetOverlay = PET_CONFIG?.replaceNativeOverlay === false;
   let petController = null;
 
   const clampNumber = (value, minimum, maximum) => Math.min(maximum, Math.max(minimum, Number(value) || 0));
@@ -725,30 +749,38 @@
       frame: 0,
       visible: false,
       dragging: false,
+      destroyed: false,
       animationTimer: null,
       stateTimer: null,
+      runningMissingSince: 0,
       position,
       pointer: null,
       moveFrame: null,
       paint() {
         const spec = PET_ROWS[this.state] || PET_ROWS.idle;
         const column = Math.min(this.frame, spec.frames - 1);
-        sprite.style.backgroundPosition = `${(column * 100) / 7}% ${(spec.row * 100) / 10}%`;
+        const x = -column * (100 / 8);
+        const y = -spec.row * (100 / 11);
+        setStyleIfChanged(sprite, "transform", `translate3d(${x}%, ${y}%, 0)`);
       },
       setState(nextState) {
+        if (this.destroyed) return;
         const next = PET_ROWS[nextState] ? nextState : "idle";
         if (this.state === next) return;
         this.state = next;
         this.frame = 0;
         node.dataset.dreamPetState = next;
         this.paint();
+        if (this.visible) this.scheduleFrame();
       },
       scheduleFrame() {
+        if (this.destroyed) return;
         if (this.animationTimer) clearTimeout(this.animationTimer);
         const spec = PET_ROWS[this.state] || PET_ROWS.idle;
         const delay = spec.durations[this.frame] || 180;
         this.animationTimer = setTimeout(() => {
           this.animationTimer = null;
+          if (this.destroyed) return;
           if (this.visible && !document.hidden) {
             this.frame = (this.frame + 1) % spec.frames;
             this.paint();
@@ -757,24 +789,45 @@
         }, document.hidden ? 1000 : delay);
       },
       detectState() {
-        if (this.dragging) return;
+        if (this.destroyed || this.dragging || !this.visible) return;
         const visibleNode = (selector) => {
           const candidate = document.querySelector(selector);
           return candidate && petIsVisible(candidate);
         };
-        if (visibleNode('.composer-surface-chrome button[aria-label*="Stop" i], .composer-surface-chrome [data-testid*="stop" i]')) {
+        const runningSignal = visibleNode([
+          '.composer-surface-chrome .dream-miku-composer-stop',
+          '.composer-surface-chrome [data-dream-miku-composer-action="stop"]',
+          '.composer-surface-chrome [data-dream-miku-composer-action="pause"]',
+          '.composer-surface-chrome button[aria-label*="Stop" i]',
+          '.composer-surface-chrome button[aria-label*="Pause" i]',
+          '.composer-surface-chrome [data-testid*="stop" i]',
+          '.composer-surface-chrome [data-testid*="pause" i]',
+        ].join(", "));
+        if (runningSignal) {
+          this.runningMissingSince = 0;
           this.setState("running");
         } else if (visibleNode('main.main-surface .codex-review-diff-card, main.main-surface .cm-editor')) {
+          this.runningMissingSince = 0;
           this.setState("review");
         } else if (visibleNode('[data-testid*="approval" i][data-state="open"], [data-testid*="approval" i][data-state="pending"]')) {
+          this.runningMissingSince = 0;
           this.setState("waiting");
         } else if (this.state !== "waving" && this.state !== "jumping") {
+          if (this.state === "running") {
+            if (!this.runningMissingSince) this.runningMissingSince = performance.now();
+            if (performance.now() - this.runningMissingSince < 1600) return;
+          }
+          this.runningMissingSince = 0;
           this.setState("idle");
         }
       },
       startStateTimer() {
-        if (this.stateTimer) return;
-        this.stateTimer = setInterval(() => this.detectState(), 1200);
+        if (this.destroyed || this.stateTimer) return;
+        this.stateTimer = setInterval(() => this.detectState(), 700);
+      },
+      stopStateTimer() {
+        if (this.stateTimer) clearInterval(this.stateTimer);
+        this.stateTimer = null;
       },
       stopAnimation() {
         if (this.animationTimer) clearTimeout(this.animationTimer);
@@ -806,14 +859,19 @@
         writePetPosition(this.position);
       },
       setVisible(nextVisible) {
-        this.visible = Boolean(nextVisible);
+        const visible = Boolean(nextVisible);
+        if (this.destroyed || this.visible === visible) return;
+        this.visible = visible;
         node.classList.toggle("dream-miku-window-pet-hidden", !this.visible);
+        updateBubble(this);
         if (this.visible) {
           this.applyPosition();
+          this.detectState();
           this.startStateTimer();
           if (!this.animationTimer) this.scheduleFrame();
         } else {
           this.stopAnimation();
+          this.stopStateTimer();
         }
       },
       resetPosition() {
@@ -893,8 +951,10 @@
         }, 700);
       },
       destroy() {
+        if (this.destroyed) return;
+        this.destroyed = true;
         this.stopAnimation();
-        if (this.stateTimer) clearInterval(this.stateTimer);
+        this.stopStateTimer();
         if (this.moveFrame) cancelAnimationFrame(this.moveFrame);
         node.removeEventListener("pointerdown", this.onPointerDown);
         node.removeEventListener("pointermove", this.onPointerMove);
@@ -902,6 +962,7 @@
         node.removeEventListener("pointercancel", this.onPointerUp);
         node.removeEventListener("keydown", this.onKeyDown);
         node.removeEventListener("dblclick", this.resetPosition);
+        window[PET_CONTROLLERS_KEY]?.delete?.(this);
       },
     };
     controller.paint();
@@ -916,17 +977,25 @@
     node.addEventListener("pointercancel", controller.onPointerUp, { passive: true });
     node.addEventListener("keydown", controller.onKeyDown);
     node.addEventListener("dblclick", controller.resetPosition);
+    window[PET_CONTROLLERS_KEY].add(controller);
     return controller;
   };
 
   const ensureMikuWindowPet = (chrome, shouldShow) => {
-    if (!petUrl || !PET_CONFIG || (THEME.preset || "classic") !== "miku-pastel") {
+    if (!petUrl || !PET_CONFIG || nativePetOverlay || (THEME.preset || "classic") !== "miku-pastel") {
       petController?.destroy?.();
       petController = null;
       chrome.querySelector(".dream-miku-window-pet")?.remove();
+      if (window[STATE_KEY]) window[STATE_KEY].petController = null;
       return null;
     }
     let node = chrome.querySelector(".dream-miku-window-pet");
+    if (node && !node.querySelector(".dream-miku-window-pet-viewport")) {
+      petController?.destroy?.();
+      petController = null;
+      node.remove();
+      node = null;
+    }
     if (!node) {
       node = document.createElement("button");
       node.type = "button";
@@ -934,15 +1003,15 @@
       node.dataset.dreamGenerated = "miku";
       node.dataset.dreamPetState = "idle";
       node.setAttribute("aria-label", "Miku Future pet");
-      node.innerHTML = `<span class="dream-miku-window-pet-sprite" aria-hidden="true"></span>`;
+      node.innerHTML = `<span class="dream-miku-window-pet-viewport" aria-hidden="true"><span class="dream-miku-window-pet-sprite"></span></span>`;
       chrome.appendChild(node);
     }
     if (!petController || petController.node !== node) {
       petController?.destroy?.();
       petController = createPetController(node, chrome);
     }
-    setStyleIfChanged(node, "--dream-miku-pet-size", `${PET_CONFIG.size || 128}px`);
     petController.setVisible(shouldShow);
+    if (window[STATE_KEY]) window[STATE_KEY].petController = petController;
     return petController;
   };
 
@@ -956,6 +1025,7 @@
   const cleanupMikuDecorations = () => {
     petController?.destroy?.();
     petController = null;
+    if (window[STATE_KEY]) window[STATE_KEY].petController = null;
     for (const placeholder of document.querySelectorAll("[data-dream-original-placeholder]")) {
       placeholder.setAttribute("data-placeholder", placeholder.dataset.dreamOriginalPlaceholder || "");
       delete placeholder.dataset.dreamOriginalPlaceholder;
@@ -1078,7 +1148,10 @@
     chrome.classList.toggle("dream-skin-home-shell", Boolean(home));
     chrome.classList.toggle("dream-miku-module-open", moduleOpen);
     if (chrome.dataset.dreamShell !== shell) chrome.dataset.dreamShell = shell;
-    const shouldShowPet = Boolean(petUrl && !home && !settingsSurface && !moduleOpen);
+    // New chat and settings keep the transparent Pet visible. Expanded
+    // auxiliary modules still hide it because those surfaces have controls
+    // that the Pet could cover.
+    const shouldShowPet = Boolean(petUrl && !nativePetOverlay && !moduleOpen);
     const pet = ensureMikuWindowPet(chrome, shouldShowPet);
     if (pet && shouldShowPet) pet.applyPosition();
   };
@@ -1267,9 +1340,11 @@
     version: VERSION,
     themeId: THEME.id || "custom",
     preset: THEME.preset || "classic",
+    nativePetOverlay,
     detectShellMode,
   };
   runEnsure();
+  window[STATE_KEY].petController = petController;
   return {
     installed: true,
     version: VERSION,

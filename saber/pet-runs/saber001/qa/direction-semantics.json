@@ -1,0 +1,18 @@
+[
+  {"direction":"000","expected":"up","observed":"Pupils and chin lift above the face center.","verdict":"pass","reason":"Clearly upward gaze."},
+  {"direction":"022.5","expected":"up-right","observed":"Subtle screen-right turn with an upward gaze.","verdict":"warning","reason":"Vertical cue is subtle in blind review, but coherent in sequence."},
+  {"direction":"045","expected":"up-right","observed":"Screen-right head turn with raised gaze.","verdict":"warning","reason":"Vertical cue is subtle in blind review, but coherent in sequence."},
+  {"direction":"067.5","expected":"up-right","observed":"Near-profile screen-right and upward pose.","verdict":"warning","reason":"Vertical cue is subtle in blind review, but coherent in sequence."},
+  {"direction":"090","expected":"right","observed":"Unmistakable screen-right profile; nose and nearer eye sit to the right of head center.","verdict":"pass","reason":"Clear cardinal right direction."},
+  {"direction":"112.5","expected":"down-right","observed":"Bowed screen-right profile.","verdict":"warning","reason":"Reads correctly in the labeled loop despite blind-axis disagreement."},
+  {"direction":"135","expected":"down-right","observed":"Lowered gaze and right-shifted face.","verdict":"pass","reason":"Clear down-right cue."},
+  {"direction":"157.5","expected":"down-right","observed":"Bowed face with a visible screen-right/down cue.","verdict":"pass","reason":"Clear down-right cue."},
+  {"direction":"180","expected":"down","observed":"Unmistakably bowed head and lowered pupils.","verdict":"pass","reason":"Clear cardinal down direction."},
+  {"direction":"202.5","expected":"down-left","observed":"Cohesive down-left transition.","verdict":"warning","reason":"Horizontal cue is subtle and blind review read right."},
+  {"direction":"225","expected":"down-left","observed":"Bowed down-left pose.","verdict":"warning","reason":"Cohesive in the labeled loop, though blind review read right."},
+  {"direction":"247.5","expected":"down-left","observed":"Subtle leftward/downward turn before the cardinal left pose.","verdict":"warning","reason":"Blind review read right for this intermediate pose."},
+  {"direction":"270","expected":"left","observed":"Unmistakable screen-left profile; nose and nearer eye sit to the left of head center.","verdict":"pass","reason":"Clear cardinal left direction."},
+  {"direction":"292.5","expected":"up-left","observed":"Screen-left profile with lifted gaze.","verdict":"pass","reason":"Clear up-left cue."},
+  {"direction":"315","expected":"up-left","observed":"Left-shifted face with elevated pupils.","verdict":"pass","reason":"Clear up-left cue."},
+  {"direction":"337.5","expected":"up-left","observed":"Screen-left/up pose that closes smoothly to 000.","verdict":"warning","reason":"Vertical cue is subtle in blind review."}
+]

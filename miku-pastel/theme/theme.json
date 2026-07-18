@@ -22,7 +22,7 @@
     "image": "miku-future-spritesheet.webp",
     "spriteVersionNumber": 2,
     "size": 128,
-    "replaceNativeOverlay": true
+    "replaceNativeOverlay": false
   },
   "colors": {
     "background": "#ECFAFD",

@@ -1,0 +1,18 @@
+{
+  "000": {"verdict":"pass","expected":"up","observed":"raised chin and pupils at the top of the eyes","reason":"Independent visual QA confirmed an unmistakable up pose."},
+  "022.5": {"verdict":"warning","expected":"up-right","observed":"mild rightward cue with raised gaze","reason":"Blind review found the horizontal cue subtle; visual QA accepted the progression."},
+  "045": {"verdict":"warning","expected":"up-right","observed":"medium rightward cue with raised gaze","reason":"Blind review found the horizontal cue subtle; visual QA accepted the progression."},
+  "067.5": {"verdict":"warning","expected":"up-right","observed":"near-right raised pose","reason":"Vertical blind evidence was ambiguous; visual QA accepted it as ordered."},
+  "090": {"verdict":"pass","expected":"screen-right","observed":"nose and visible eye point to image-right","reason":"Hard blind gate and visual QA passed."},
+  "112.5": {"verdict":"pass","expected":"down-right","observed":"rightward face begins returning toward frontal while lowering","reason":"Visual QA accepted the ordered transition."},
+  "135": {"verdict":"warning","expected":"down-right","observed":"wider lower-right face with both eyes returning","reason":"Blind horizontal cue was ambiguous; visual QA accepted the progression."},
+  "157.5": {"verdict":"warning","expected":"down-right","observed":"near-frontal down with a small right bias","reason":"Blind horizontal cue was subtle; visual QA confirmed a smooth 180 boundary."},
+  "180": {"verdict":"pass","expected":"down","observed":"lowered chin and eyes with face visible","reason":"Hard blind gate and visual QA passed."},
+  "202.5": {"verdict":"warning","expected":"down-left","observed":"mild lower-left cue","reason":"Blind horizontal cue was subtle; visual QA accepted the progression."},
+  "225": {"verdict":"warning","expected":"down-left","observed":"lower-left turn","reason":"Blind vertical cue was ambiguous; visual QA accepted the progression."},
+  "247.5": {"verdict":"warning","expected":"down-left","observed":"near-left lower pose","reason":"Blind vertical cue was ambiguous; visual QA accepted the progression."},
+  "270": {"verdict":"pass","expected":"screen-left","observed":"nose and visible eye point to image-left","reason":"Hard blind gate and visual QA passed."},
+  "292.5": {"verdict":"warning","expected":"up-left","observed":"leftward face lifts toward up","reason":"Blind vertical cue was ambiguous; visual QA accepted the progression."},
+  "315": {"verdict":"warning","expected":"up-left","observed":"upper-left turn toward frontal","reason":"Blind vertical cue was ambiguous; visual QA accepted the progression."},
+  "337.5": {"verdict":"pass","expected":"up-left","observed":"slight left-up pose closing into 000","reason":"Visual QA and blind vertical review confirmed the upward closure."}
+}

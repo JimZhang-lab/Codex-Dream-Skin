@@ -1,0 +1,7 @@
+Create one clean full-body reference sprite for Codex pet Artoria Classic.
+
+Pet identity: Upgrade the existing pixel-art chibi Saber-inspired pet. Preserve the blonde crown-topped hair, teal eyes, royal-blue and ivory armor dress, white gauntlets, navy bow, gold trim, and attached sword. This is an existing 8x9 atlas upgrade: keep standard rows 0-8 unchanged and add only coherent v2 looking directions. No text, logos, scenery, detached effects, shadows, or guide marks..
+Style: Pet-safe sprite: compact full-body mascot, readable in a 192x208 cell, clear silhouette, simple face, stable palette/materials, and crisp edges for chroma-key extraction. Style `pixel`: Pixel-art-adjacent digital mascot with a chunky silhouette, simple dark outline, limited palette, flat cel shading, and visible stepped edges. User style notes: Preserve the existing crisp pixel-art sprite style, compact chibi proportions, limited royal-blue/ivory/gold palette, dark outline, and exact identity from the supplied atlas..
+
+
+Place a single centered pose on a perfectly flat pure user-selected #FF00FF chroma-key background. Keep the full pet visible, compact, readable at 192x208, and easy to animate. Preserve approved reference identity cues. No scenery, text, borders, checkerboard transparency, shadows, glows, detached effects, or extra props. Keep #FF00FF and close colors out of the pet, props, highlights, and effects.

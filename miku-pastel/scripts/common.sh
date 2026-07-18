@@ -17,7 +17,7 @@ STATE_ROOT="$HOME/Library/Application Support/CodexDreamSkinStudio"
 ACTIVE_THEME_ROOT="$STATE_ROOT/theme"
 THEME_HISTORY_ROOT="$STATE_ROOT/theme-history"
 STATE_PATH="$STATE_ROOT/state.json"
-MINIMUM_ENGINE_VERSION="1.4.1"
+MINIMUM_ENGINE_VERSION="1.4.7"
 
 fail() {
   printf 'Miku Pastel: %s\n' "$*" >&2

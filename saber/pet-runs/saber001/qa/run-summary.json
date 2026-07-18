@@ -1,0 +1,1302 @@
+{
+  "pet_id": "saber001",
+  "completed_at": "2026-07-17T17:27:00Z",
+  "installed_pet_path": "/Users/jim/.codex/pets/saber001",
+  "selected_look_row_10_source": "/Users/jim/.codex/generated_images/019f70e3-82ba-7551-b49e-fc7f8d8ed2ec/exec-6bed4324-73ae-4e47-9be2-765a8ebdb9ca.png",
+  "atlas": {
+    "spritesheetPath": "spritesheet-extended.webp",
+    "spritesheetLayout": {
+      "columns": 8,
+      "rows": 11,
+      "cellWidth": 192,
+      "cellHeight": 208,
+      "lookDirectionCount": 16,
+      "neutralLookFrame": {
+        "rowIndex": 0,
+        "columnIndex": 6
+      }
+    },
+    "lookDirections": [
+      {
+        "degrees": 0.0,
+        "rowIndex": 9,
+        "columnIndex": 0
+      },
+      {
+        "degrees": 22.5,
+        "rowIndex": 9,
+        "columnIndex": 1
+      },
+      {
+        "degrees": 45.0,
+        "rowIndex": 9,
+        "columnIndex": 2
+      },
+      {
+        "degrees": 67.5,
+        "rowIndex": 9,
+        "columnIndex": 3
+      },
+      {
+        "degrees": 90.0,
+        "rowIndex": 9,
+        "columnIndex": 4
+      },
+      {
+        "degrees": 112.5,
+        "rowIndex": 9,
+        "columnIndex": 5
+      },
+      {
+        "degrees": 135.0,
+        "rowIndex": 9,
+        "columnIndex": 6
+      },
+      {
+        "degrees": 157.5,
+        "rowIndex": 9,
+        "columnIndex": 7
+      },
+      {
+        "degrees": 180.0,
+        "rowIndex": 10,
+        "columnIndex": 0
+      },
+      {
+        "degrees": 202.5,
+        "rowIndex": 10,
+        "columnIndex": 1
+      },
+      {
+        "degrees": 225.0,
+        "rowIndex": 10,
+        "columnIndex": 2
+      },
+      {
+        "degrees": 247.5,
+        "rowIndex": 10,
+        "columnIndex": 3
+      },
+      {
+        "degrees": 270.0,
+        "rowIndex": 10,
+        "columnIndex": 4
+      },
+      {
+        "degrees": 292.5,
+        "rowIndex": 10,
+        "columnIndex": 5
+      },
+      {
+        "degrees": 315.0,
+        "rowIndex": 10,
+        "columnIndex": 6
+      },
+      {
+        "degrees": 337.5,
+        "rowIndex": 10,
+        "columnIndex": 7
+      }
+    ]
+  },
+  "atlas_validation": {
+    "ok": true,
+    "file": "/Users/jim/Desktop/extensiveWork/project/Codex-Dream-Skin/saber/pet-runs/saber001/final/spritesheet-extended.webp",
+    "format": "WEBP",
+    "mode": "RGBA",
+    "columns": 8,
+    "rows": 11,
+    "sprite_version_number": 2,
+    "width": 1536,
+    "height": 2288,
+    "transparent_rgb_residue_pixels": 0,
+    "errors": [],
+    "warnings": [],
+    "cells": [
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 17120,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 16858,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 16492,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 16784,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 16105,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 16166,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 6,
+        "used": true,
+        "nontransparent_pixels": 17000,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "idle",
+        "row": 0,
+        "column": 7,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 17860,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 19858,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 18401,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 19902,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 18938,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 18780,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 6,
+        "used": true,
+        "nontransparent_pixels": 19077,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-right",
+        "row": 1,
+        "column": 7,
+        "used": true,
+        "nontransparent_pixels": 19781,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 18741,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 17524,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 18556,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 18223,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 19273,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 17879,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 6,
+        "used": true,
+        "nontransparent_pixels": 16984,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running-left",
+        "row": 2,
+        "column": 7,
+        "used": true,
+        "nontransparent_pixels": 16961,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 16458,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 16693,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 16635,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 16534,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 4,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 5,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 6,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waving",
+        "row": 3,
+        "column": 7,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 18338,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 17236,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 15469,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 15758,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 17944,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 5,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 6,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "jumping",
+        "row": 4,
+        "column": 7,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 16295,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 15394,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 15242,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 15187,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 14941,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 15095,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 6,
+        "used": true,
+        "nontransparent_pixels": 15017,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "failed",
+        "row": 5,
+        "column": 7,
+        "used": true,
+        "nontransparent_pixels": 15549,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 16119,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 16082,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 16641,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 16438,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 15864,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 16975,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 6,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "waiting",
+        "row": 6,
+        "column": 7,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 16586,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 16428,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 16214,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 16116,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 16178,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 16183,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 6,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "running",
+        "row": 7,
+        "column": 7,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 16539,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 16551,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 16460,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 16508,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 16440,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 16548,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 6,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "review",
+        "row": 8,
+        "column": 7,
+        "used": false,
+        "nontransparent_pixels": 0,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 15842,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 16081,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 15628,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 15514,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 14029,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 14651,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 6,
+        "used": true,
+        "nontransparent_pixels": 14387,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-000-to-157.5",
+        "row": 9,
+        "column": 7,
+        "used": true,
+        "nontransparent_pixels": 14504,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 0,
+        "used": true,
+        "nontransparent_pixels": 14842,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 1,
+        "used": true,
+        "nontransparent_pixels": 15370,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 2,
+        "used": true,
+        "nontransparent_pixels": 15286,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 3,
+        "used": true,
+        "nontransparent_pixels": 15030,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 4,
+        "used": true,
+        "nontransparent_pixels": 14469,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 5,
+        "used": true,
+        "nontransparent_pixels": 15524,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 6,
+        "used": true,
+        "nontransparent_pixels": 15963,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      },
+      {
+        "state": "look-180-to-337.5",
+        "row": 10,
+        "column": 7,
+        "used": true,
+        "nontransparent_pixels": 15875,
+        "opaque_chroma_key_pixels": 0,
+        "chroma_fringe_pixels": 0
+      }
+    ]
+  },
+  "blind_direction_validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "horizontal-5 A classified screen-left; expected screen-right",
+      "horizontal-5 B classified screen-right; expected screen-left",
+      "horizontal-6 B classified screen-right; expected screen-left",
+      "horizontal-6 A and B were classified as the same horizontal direction",
+      "horizontal-7 A classified screen-right; expected screen-left",
+      "horizontal-7 A and B were classified as the same horizontal direction",
+      "vertical-2 A vertical axis is ambiguous",
+      "vertical-3 A vertical axis is ambiguous",
+      "vertical-4 A vertical axis is ambiguous",
+      "vertical-4 B vertical axis is ambiguous",
+      "vertical-5 A vertical axis is ambiguous",
+      "vertical-7 B vertical axis is ambiguous"
+    ],
+    "unconfirmed": [],
+    "reviewRequired": true,
+    "pairs": [
+      {
+        "pair": "horizontal-1",
+        "axis": "horizontal",
+        "gate": "review",
+        "A": {
+          "observed": "screen-left",
+          "expected": "screen-left",
+          "source_direction": "337.5",
+          "pass": true
+        },
+        "B": {
+          "observed": "screen-right",
+          "expected": "screen-right",
+          "source_direction": "022.5",
+          "pass": true
+        }
+      },
+      {
+        "pair": "horizontal-2",
+        "axis": "horizontal",
+        "gate": "review",
+        "A": {
+          "observed": "screen-left",
+          "expected": "screen-left",
+          "source_direction": "315",
+          "pass": true
+        },
+        "B": {
+          "observed": "screen-right",
+          "expected": "screen-right",
+          "source_direction": "045",
+          "pass": true
+        }
+      },
+      {
+        "pair": "horizontal-3",
+        "axis": "horizontal",
+        "gate": "review",
+        "A": {
+          "observed": "screen-right",
+          "expected": "screen-right",
+          "source_direction": "067.5",
+          "pass": true
+        },
+        "B": {
+          "observed": "screen-left",
+          "expected": "screen-left",
+          "source_direction": "292.5",
+          "pass": true
+        }
+      },
+      {
+        "pair": "horizontal-4",
+        "axis": "horizontal",
+        "gate": "hard",
+        "A": {
+          "observed": "screen-right",
+          "expected": "screen-right",
+          "source_direction": "090",
+          "pass": true
+        },
+        "B": {
+          "observed": "screen-left",
+          "expected": "screen-left",
+          "source_direction": "270",
+          "pass": true
+        }
+      },
+      {
+        "pair": "horizontal-5",
+        "axis": "horizontal",
+        "gate": "review",
+        "A": {
+          "observed": "screen-left",
+          "expected": "screen-right",
+          "source_direction": "112.5",
+          "pass": false
+        },
+        "B": {
+          "observed": "screen-right",
+          "expected": "screen-left",
+          "source_direction": "247.5",
+          "pass": false
+        }
+      },
+      {
+        "pair": "horizontal-6",
+        "axis": "horizontal",
+        "gate": "review",
+        "A": {
+          "observed": "screen-right",
+          "expected": "screen-right",
+          "source_direction": "135",
+          "pass": true
+        },
+        "B": {
+          "observed": "screen-right",
+          "expected": "screen-left",
+          "source_direction": "225",
+          "pass": false
+        }
+      },
+      {
+        "pair": "horizontal-7",
+        "axis": "horizontal",
+        "gate": "review",
+        "A": {
+          "observed": "screen-right",
+          "expected": "screen-left",
+          "source_direction": "202.5",
+          "pass": false
+        },
+        "B": {
+          "observed": "screen-right",
+          "expected": "screen-right",
+          "source_direction": "157.5",
+          "pass": true
+        }
+      },
+      {
+        "pair": "vertical-1",
+        "axis": "vertical",
+        "gate": "hard",
+        "A": {
+          "observed": "down",
+          "expected": "down",
+          "source_direction": "180",
+          "pass": true
+        },
+        "B": {
+          "observed": "up",
+          "expected": "up",
+          "source_direction": "000",
+          "pass": true
+        }
+      },
+      {
+        "pair": "vertical-2",
+        "axis": "vertical",
+        "gate": "review",
+        "A": {
+          "observed": "ambiguous",
+          "expected": "up",
+          "source_direction": "022.5",
+          "pass": false
+        },
+        "B": {
+          "observed": "down",
+          "expected": "down",
+          "source_direction": "157.5",
+          "pass": true
+        }
+      },
+      {
+        "pair": "vertical-3",
+        "axis": "vertical",
+        "gate": "review",
+        "A": {
+          "observed": "ambiguous",
+          "expected": "up",
+          "source_direction": "045",
+          "pass": false
+        },
+        "B": {
+          "observed": "down",
+          "expected": "down",
+          "source_direction": "135",
+          "pass": true
+        }
+      },
+      {
+        "pair": "vertical-4",
+        "axis": "vertical",
+        "gate": "review",
+        "A": {
+          "observed": "ambiguous",
+          "expected": "down",
+          "source_direction": "112.5",
+          "pass": false
+        },
+        "B": {
+          "observed": "ambiguous",
+          "expected": "up",
+          "source_direction": "067.5",
+          "pass": false
+        }
+      },
+      {
+        "pair": "vertical-5",
+        "axis": "vertical",
+        "gate": "review",
+        "A": {
+          "observed": "ambiguous",
+          "expected": "up",
+          "source_direction": "337.5",
+          "pass": false
+        },
+        "B": {
+          "observed": "down",
+          "expected": "down",
+          "source_direction": "202.5",
+          "pass": true
+        }
+      },
+      {
+        "pair": "vertical-6",
+        "axis": "vertical",
+        "gate": "review",
+        "A": {
+          "observed": "up",
+          "expected": "up",
+          "source_direction": "315",
+          "pass": true
+        },
+        "B": {
+          "observed": "down",
+          "expected": "down",
+          "source_direction": "225",
+          "pass": true
+        }
+      },
+      {
+        "pair": "vertical-7",
+        "axis": "vertical",
+        "gate": "review",
+        "A": {
+          "observed": "down",
+          "expected": "down",
+          "source_direction": "247.5",
+          "pass": true
+        },
+        "B": {
+          "observed": "ambiguous",
+          "expected": "up",
+          "source_direction": "292.5",
+          "pass": false
+        }
+      }
+    ]
+  },
+  "direction_semantics": [
+    {
+      "direction": "000",
+      "expected": "up",
+      "observed": "Pupils and chin lift above the face center.",
+      "verdict": "pass",
+      "reason": "Clearly upward gaze."
+    },
+    {
+      "direction": "022.5",
+      "expected": "up-right",
+      "observed": "Subtle screen-right turn with an upward gaze.",
+      "verdict": "warning",
+      "reason": "Vertical cue is subtle in blind review, but coherent in sequence."
+    },
+    {
+      "direction": "045",
+      "expected": "up-right",
+      "observed": "Screen-right head turn with raised gaze.",
+      "verdict": "warning",
+      "reason": "Vertical cue is subtle in blind review, but coherent in sequence."
+    },
+    {
+      "direction": "067.5",
+      "expected": "up-right",
+      "observed": "Near-profile screen-right and upward pose.",
+      "verdict": "warning",
+      "reason": "Vertical cue is subtle in blind review, but coherent in sequence."
+    },
+    {
+      "direction": "090",
+      "expected": "right",
+      "observed": "Unmistakable screen-right profile; nose and nearer eye sit to the right of head center.",
+      "verdict": "pass",
+      "reason": "Clear cardinal right direction."
+    },
+    {
+      "direction": "112.5",
+      "expected": "down-right",
+      "observed": "Bowed screen-right profile.",
+      "verdict": "warning",
+      "reason": "Reads correctly in the labeled loop despite blind-axis disagreement."
+    },
+    {
+      "direction": "135",
+      "expected": "down-right",
+      "observed": "Lowered gaze and right-shifted face.",
+      "verdict": "pass",
+      "reason": "Clear down-right cue."
+    },
+    {
+      "direction": "157.5",
+      "expected": "down-right",
+      "observed": "Bowed face with a visible screen-right/down cue.",
+      "verdict": "pass",
+      "reason": "Clear down-right cue."
+    },
+    {
+      "direction": "180",
+      "expected": "down",
+      "observed": "Unmistakably bowed head and lowered pupils.",
+      "verdict": "pass",
+      "reason": "Clear cardinal down direction."
+    },
+    {
+      "direction": "202.5",
+      "expected": "down-left",
+      "observed": "Cohesive down-left transition.",
+      "verdict": "warning",
+      "reason": "Horizontal cue is subtle and blind review read right."
+    },
+    {
+      "direction": "225",
+      "expected": "down-left",
+      "observed": "Bowed down-left pose.",
+      "verdict": "warning",
+      "reason": "Cohesive in the labeled loop, though blind review read right."
+    },
+    {
+      "direction": "247.5",
+      "expected": "down-left",
+      "observed": "Subtle leftward/downward turn before the cardinal left pose.",
+      "verdict": "warning",
+      "reason": "Blind review read right for this intermediate pose."
+    },
+    {
+      "direction": "270",
+      "expected": "left",
+      "observed": "Unmistakable screen-left profile; nose and nearer eye sit to the left of head center.",
+      "verdict": "pass",
+      "reason": "Clear cardinal left direction."
+    },
+    {
+      "direction": "292.5",
+      "expected": "up-left",
+      "observed": "Screen-left profile with lifted gaze.",
+      "verdict": "pass",
+      "reason": "Clear up-left cue."
+    },
+    {
+      "direction": "315",
+      "expected": "up-left",
+      "observed": "Left-shifted face with elevated pupils.",
+      "verdict": "pass",
+      "reason": "Clear up-left cue."
+    },
+    {
+      "direction": "337.5",
+      "expected": "up-left",
+      "observed": "Screen-left/up pose that closes smoothly to 000.",
+      "verdict": "warning",
+      "reason": "Vertical cue is subtle in blind review."
+    }
+  ],
+  "geometry_tradeoff": {
+    "decision": "accepted",
+    "scope": "look-row-10 source registration",
+    "reason": "The user explicitly chose the current built-in result and declined an API-key or paid fallback. The final independent visual review confirms complete, visibly unclipped poses.",
+    "edge_pixel_threshold": 500,
+    "selected_source": "/Users/jim/.codex/generated_images/019f70e3-82ba-7551-b49e-fc7f8d8ed2ec/exec-6bed4324-73ae-4e47-9be2-765a8ebdb9ca.png",
+    "visual_qa": "pass",
+    "recorded_on": "2026-07-18"
+  },
+  "final_visual_qa": {
+    "verdict": "pass",
+    "note": "All standard and v2 rows retain a cohesive Saber-like identity, complete unclipped poses, and a clockwise gaze loop."
+  },
+  "artifacts": {
+    "preview": "qa/contact-sheet-extended.png",
+    "spritesheet": "final/spritesheet-extended.webp",
+    "installed_spritesheet": "/Users/jim/.codex/pets/saber001/spritesheet.webp"
+  }
+}

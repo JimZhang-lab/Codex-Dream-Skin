@@ -238,7 +238,7 @@ html.codex-dream-skin[data-dream-preset="miku-pastel"] .dream-miku-window-pet {
   cursor: grab;
   pointer-events: auto;
   touch-action: none;
-  contain: layout paint;
+  contain: layout;
   will-change: left, top;
   transition: opacity 160ms ease, transform 160ms ease;
 }
@@ -253,19 +253,34 @@ html.codex-dream-skin[data-dream-preset="miku-pastel"] .dream-miku-window-pet[da
   transform: translateY(-1px) scale(1.025);
 }
 
-html.codex-dream-skin[data-dream-preset="miku-pastel"] .dream-miku-window-pet-sprite {
+html.codex-dream-skin[data-dream-preset="miku-pastel"] .dream-miku-window-pet-viewport {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"] .dream-miku-window-pet-sprite {
+  display: block;
+  width: 800%;
+  height: 1100%;
   background-color: transparent !important;
   background-image: var(--dream-miku-pet-image) !important;
-  background-position: 0% 0%;
+  background-position: 0 0;
   background-repeat: no-repeat;
-  background-size: 800% 1100%;
+  background-size: 100% 100%;
   box-shadow: none !important;
   filter: none !important;
   pointer-events: none;
-  contain: strict;
+  transform: translate3d(0, 0, 0);
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+  will-change: transform;
+  contain: paint;
 }
 
 html.codex-dream-skin[data-dream-preset="miku-pastel"] .dream-miku-window-pet-hidden {
@@ -1661,6 +1676,193 @@ html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-module-open="t
   opacity: 0 !important;
 }
 
+/* ===========================================================================
+   Dark task shell — Markdown, TeX, file viewers and review diffs
+
+   The Miku artwork starts from a pastel palette, but Codex can run in dark
+   appearance.  Keep every document/editor primitive dark in that mode so a
+   dark syntax foreground is never rendered on the preset's light paper.
+   =========================================================================== */
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) {
+  color-scheme: dark !important;
+  --ds-bg: #07171e;
+  --ds-panel: #0d222b;
+  --ds-panel-2: #112b35;
+  --ds-text: #e9fbfd;
+  --ds-muted: #b6d7db;
+  --ds-line: rgba(82, 218, 214, .28);
+
+  --color-token-bg-primary: #07171e;
+  --color-token-bg-secondary: rgba(13, 34, 43, .95);
+  --color-token-bg-tertiary: rgba(17, 43, 53, .94);
+  --color-token-bg-fog: rgba(82, 218, 214, .075);
+  --color-token-main-surface-primary: rgba(8, 25, 32, .94);
+  --color-token-side-bar-background: rgba(8, 25, 32, .96);
+  --color-token-dropdown-background: rgba(12, 31, 39, .98);
+  --color-token-menu-background: rgba(12, 31, 39, .98);
+  --color-token-input-background: rgba(17, 43, 53, .92);
+  --color-token-editor-background: #0b1e28;
+  --color-token-editor-widget-background: #102a35;
+  --color-token-text-preformat-background: #102a35;
+  --color-token-text-code-block-background: #102a35;
+
+  --color-token-foreground: #e9fbfd;
+  --color-token-text-primary: #e9fbfd;
+  --color-token-text-secondary: rgba(210, 237, 241, .76);
+  --color-token-text-tertiary: rgba(182, 218, 224, .60);
+  --color-token-description-foreground: rgba(182, 218, 224, .64);
+  --color-token-conversation-body: rgba(223, 245, 247, .86);
+  --color-token-conversation-header: rgba(209, 237, 240, .58);
+  --color-token-input-foreground: #e9fbfd;
+  --color-token-input-placeholder-foreground: rgba(182, 218, 224, .56);
+  --color-token-icon-foreground: #c7eff1;
+  --color-token-dropdown-foreground: #e2f7f9;
+  --color-token-list-active-selection-foreground: #f2fdff;
+  --color-token-editor-foreground: #e9fbfd;
+  --color-token-text-preformat-foreground: #d7f3f5;
+  --color-token-terminal-background: #061117;
+  --color-token-terminal-foreground: #eafcff;
+  --color-token-editor-selection-background: rgba(82, 218, 214, .25);
+  --color-token-editor-find-match-background: rgba(242, 157, 209, .28);
+  --color-token-editor-find-match-highlight-background: rgba(82, 218, 214, .18);
+  --color-token-diff-editor-removed-line-background: rgba(199, 72, 95, .22);
+  --color-token-diff-editor-removed-text-background: rgba(224, 99, 123, .32);
+  --color-token-diff-editor-inserted-line-background: rgba(39, 158, 125, .20);
+
+  --color-background-surface: #07171e;
+  --color-background-surface-under: #041117;
+  --color-background-editor-opaque: #0b1e28;
+  --color-background-elevated-primary: rgba(13, 34, 43, .98);
+  --color-background-elevated-primary-opaque: #0d222b;
+  --color-background-elevated-secondary: rgba(82, 218, 214, .08);
+  --color-background-control: rgba(17, 43, 53, .94);
+  --color-background-control-opaque: #112b35;
+  --color-text-foreground: #e9fbfd;
+  --color-text-foreground-secondary: rgba(210, 237, 241, .76);
+  --color-text-foreground-tertiary: rgba(182, 218, 224, .60);
+  --color-icon-primary: #c7eff1;
+  --color-icon-secondary: rgba(199, 239, 241, .72);
+  --color-border: rgba(82, 218, 214, .22);
+  --color-border-heavy: rgba(82, 218, 214, .34);
+  --color-border-light: rgba(82, 218, 214, .12);
+  --color-editor-added: rgba(39, 158, 125, .20);
+  --color-editor-deleted: rgba(199, 72, 95, .22);
+
+  --vscode-editor-background: #0b1e28;
+  --vscode-editor-foreground: #e9fbfd;
+  --vscode-editorGutter-background: #081923;
+  --vscode-editorLineNumber-foreground: #7fabb2;
+  --vscode-editorLineNumber-activeForeground: #67e2dd;
+  --vscode-editorCursor-foreground: #5ee1dc;
+  --vscode-editor-selectionBackground: rgba(82, 218, 214, .25);
+  --vscode-editor-inactiveSelectionBackground: rgba(82, 218, 214, .14);
+  --vscode-editor-lineHighlightBackground: rgba(82, 218, 214, .07);
+  --vscode-editor-lineHighlightBorder: rgba(82, 218, 214, .14);
+  --vscode-editorWhitespace-foreground: rgba(182, 218, 224, .22);
+  --vscode-editorIndentGuide-background: rgba(182, 218, 224, .15);
+  --vscode-editorIndentGuide-activeBackground: rgba(82, 218, 214, .36);
+  --vscode-editorGutter-foldingControlForeground: #9fc4ca;
+  --vscode-editorWidget-background: #102a35;
+  --vscode-editorWidget-foreground: #e9fbfd;
+  --vscode-editorWidget-border: rgba(82, 218, 214, .28);
+  --vscode-editorHoverWidget-background: #102a35;
+  --vscode-editorHoverWidget-foreground: #e9fbfd;
+  --vscode-editorHoverWidget-border: rgba(82, 218, 214, .26);
+  --vscode-editorSuggestWidget-background: #102a35;
+  --vscode-editorSuggestWidget-foreground: #e9fbfd;
+  --vscode-editorSuggestWidget-border: rgba(82, 218, 214, .24);
+  --vscode-editorSuggestWidget-selectedBackground: rgba(82, 218, 214, .14);
+  --vscode-input-background: #102a35;
+  --vscode-input-foreground: #e9fbfd;
+  --vscode-input-placeholderForeground: rgba(182, 218, 224, .56);
+  --vscode-textPreformat-background: rgba(82, 218, 214, .10);
+  --vscode-textPreformat-foreground: #d7f3f5;
+  --vscode-textCodeBlock-background: #102a35;
+  --vscode-button-secondaryBackground: rgba(82, 218, 214, .10);
+  --vscode-button-secondaryForeground: #e2f7f9;
+  --vscode-button-secondaryHoverBackground: rgba(82, 218, 214, .17);
+  --vscode-diffEditor-removedLineBackground: rgba(199, 72, 95, .22);
+  --vscode-diffEditor-removedTextBackground: rgba(224, 99, 123, .32);
+  --vscode-diffEditor-insertedLineBackground: rgba(39, 158, 125, .20);
+  --vscode-diffEditor-insertedTextBackground: rgba(65, 188, 149, .30);
+  --vscode-diffEditor-unchangedRegionBackground: #0d222b;
+  --vscode-diffEditor-unchangedRegionForeground: #a9cbd0;
+  --vscode-diffEditor-unchangedRegionShadow: rgba(82, 218, 214, .13);
+  --vscode-diffEditor-diagonalFill: rgba(82, 218, 214, .10);
+  --vscode-terminal-background: #061117;
+  --vscode-terminal-foreground: #eafcff;
+  --diffs-light: #e9fbfd;
+  --diffs-dark: #e9fbfd;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) body {
+  color: #e9fbfd !important;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(155, 134, 234, .18), transparent 28%),
+    radial-gradient(circle at 18% 88%, rgba(242, 157, 209, .11), transparent 30%),
+    linear-gradient(145deg, #07171e 0%, #0b2029 52%, #11172a 100%) !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) .thread-scroll-container [class~="bg-token-foreground/5"] {
+  color: #e2f7f9 !important;
+  background:
+    linear-gradient(135deg, rgba(16, 42, 53, .94), rgba(10, 29, 39, .90)) !important;
+  border-color: rgba(82, 218, 214, .22) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .22), inset 0 1px rgba(214, 248, 250, .06) !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) .thread-scroll-container [class*="_markdownContent_"] {
+  color: #e9fbfd !important;
+  text-shadow: none !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) .thread-scroll-container [class*="_codeBlock_"],
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) .thread-scroll-container pre {
+  color: #dff4f5 !important;
+  background:
+    linear-gradient(135deg, rgba(13, 35, 45, .98), rgba(8, 24, 33, .96)) !important;
+  border-color: rgba(82, 218, 214, .22) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .22) !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor,
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor .cm-scroller,
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .monaco-editor,
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .monaco-editor .margin,
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .monaco-editor .monaco-editor-background {
+  color: #e9fbfd !important;
+  background-color: #0b1e28 !important;
+  background-image: none !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor .cm-content,
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor .cm-line {
+  color: #e9fbfd !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor .cm-gutters {
+  color: #8fb7be !important;
+  background: #081923 !important;
+  border-color: rgba(82, 218, 214, .16) !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor .cm-activeLine,
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .cm-editor .cm-activeLineGutter {
+  background: rgba(82, 218, 214, .08) !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-shell="dark"]:not([data-dream-settings="true"]) main.main-surface .codex-review-diff-card {
+  color: #e9fbfd !important;
+  --codex-diffs-surface: #0d222b;
+  --codex-diffs-surface-override: #0d222b;
+  --diffs-light: #e9fbfd;
+  --diffs-dark: #e9fbfd;
+  border-color: rgba(82, 218, 214, .20) !important;
+  background: #0d222b !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .24) !important;
+}
+
 html.codex-dream-skin[data-dream-preset="miku-pastel"]:has(button[aria-label="Toggle pinned summary"][aria-pressed="true"])
   #codex-dream-skin-chrome:not(.dream-skin-home-shell) .dream-skin-orbit,
 html.codex-dream-skin[data-dream-preset="miku-pastel"]:has(button[aria-label="Toggle side panel"][aria-pressed="true"])
@@ -1898,7 +2100,12 @@ html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-settings="true
 }
 
 html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-settings="true"] #codex-dream-skin-chrome {
-  display: none !important;
+  display: block !important;
+  pointer-events: none !important;
+}
+
+html.codex-dream-skin[data-dream-preset="miku-pastel"][data-dream-settings="true"] input#pet-size[type="range"] {
+  accent-color: var(--ds-green) !important;
 }
 
 /* ==========================================================================

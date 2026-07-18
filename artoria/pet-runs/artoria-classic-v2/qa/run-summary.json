@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "completed_at": "2026-07-17T18:44:31Z",
+  "pet": {
+    "id": "artoria-classic",
+    "display_name": "Artoria Classic",
+    "sprite_version_number": 2
+  },
+  "installed_package": {
+    "directory": "/Users/jim/.codex/pets/artoria-classic",
+    "pet_json": "/Users/jim/.codex/pets/artoria-classic/pet.json",
+    "spritesheet": "/Users/jim/.codex/pets/artoria-classic/spritesheet.webp"
+  },
+  "final_artifacts": {
+    "atlas": "final/spritesheet-extended.webp",
+    "atlas_manifest": "final/spritesheet-extended.json",
+    "contact_sheet": "qa/contact-sheet-extended.png",
+    "direction_sheet": "qa/direction-qa.png"
+  },
+  "qa": {
+    "installed_atlas_validation": "qa/validation-installed.json",
+    "despill": "qa/chroma-despill-extended.json",
+    "continuity": "qa/direction-continuity.json",
+    "direction_semantics": "qa/direction-semantics.json",
+    "blind_validation": "qa/direction-blind-validation.json",
+    "visual_qa": "qa/visual-qa-final.md",
+    "atlas_ok": true,
+    "blind_hard_gates_ok": true,
+    "visual_qa_status": "pass",
+    "continuity_review_required": true
+  }
+}

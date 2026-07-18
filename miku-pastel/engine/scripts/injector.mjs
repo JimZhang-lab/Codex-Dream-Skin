@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
-const SKIN_VERSION = "1.4.1";
+const SKIN_VERSION = "1.4.7";
 const LOOPBACK_HOSTS = new Set(["127.0.0.1", "localhost", "[::1]"]);
 const MAX_ART_BYTES = 16 * 1024 * 1024;
 
@@ -492,12 +492,18 @@ async function verifySession(session) {
     const chrome = document.getElementById('codex-dream-skin-chrome');
     const moduleOpen = document.documentElement.getAttribute('data-dream-module-open') === 'true';
     const petNode = document.querySelector('#codex-dream-skin-chrome .dream-miku-window-pet');
+    const petViewport = petNode?.querySelector('.dream-miku-window-pet-viewport');
+    const petSizeControl = document.querySelector('input#pet-size[type="range"]');
     const petStyle = petNode ? getComputedStyle(petNode) : null;
     const petSpriteStyle = petNode?.querySelector('.dream-miku-window-pet-sprite')
       ? getComputedStyle(petNode.querySelector('.dream-miku-window-pet-sprite')) : null;
     const petRect = petNode?.getBoundingClientRect();
     const pet = {
       present: Boolean(petNode),
+      nativeOverlay: Boolean(window.__CODEX_DREAM_SKIN_STATE__?.nativePetOverlay),
+      viewportPresent: Boolean(petViewport),
+      controllerCount: window.__CODEX_DREAM_SKIN_PET_CONTROLLERS__?.size ?? 0,
+      exportedController: Boolean(window.__CODEX_DREAM_SKIN_STATE__?.petController),
       visible: Boolean(petNode && petStyle?.display !== 'none' && petStyle?.visibility !== 'hidden' &&
         Number(petStyle?.opacity ?? 0) > 0 && petRect?.width > 0 && petRect?.height > 0),
       width: petRect?.width ?? 0,
@@ -507,6 +513,11 @@ async function verifySession(session) {
       boxShadow: petStyle?.boxShadow ?? petSpriteStyle?.boxShadow ?? null,
       pointerEvents: petStyle?.pointerEvents ?? null,
       state: petNode?.dataset.dreamPetState ?? null,
+      bubblePresent: false,
+      bubbleVisible: false,
+      bubbleState: null,
+      bubbleText: '',
+      size: Number(petNode?.dataset.dreamPetSize ?? 0),
       metrics: window.__CODEX_DREAM_SKIN_STATE__?.metrics ?? null,
     };
     const result = {
@@ -542,6 +553,7 @@ async function verifySession(session) {
         surface: box(settingsSurfaceNode),
         sidebar: box(settingsSidebarNode),
         card: box(settingsCardNode),
+        petSizeControl: box(petSizeControl),
         cardColor: settingsText,
         panelColor: settingsPanel,
         contrast: settingsContrast,
@@ -559,6 +571,7 @@ async function verifySession(session) {
       result.settings.surface?.visible &&
       result.settings.sidebar?.visible &&
       result.settings.card?.visible &&
+      (!result.settings.petSizeControl || result.settings.petSizeControl.visible) &&
       result.settings.colorScheme.includes(result.settings.shell) &&
       Number(result.settings.contrast) >= 4.5
     );
@@ -571,13 +584,16 @@ async function verifySession(session) {
       result.hero?.visible && result.hero.width >= 280 && result.hero.height >= 120 &&
       result.visibleCardCount >= 1 && result.visibleCardCount <= 6
     );
-    const petPass = window.__CODEX_DREAM_SKIN_STATE__?.preset !== 'miku-pastel' ||
-      result.settings.active || result.homeRoute || (
+    const petPass = window.__CODEX_DREAM_SKIN_STATE__?.preset !== 'miku-pastel' || (
+      result.pet.nativeOverlay ? (!result.pet.present && !result.pet.bubblePresent) : (
         result.moduleOpen ? !result.pet.visible : (
-          result.pet.visible && result.pet.width >= 80 && result.pet.height >= 80 &&
-          result.pet.backgroundImage !== 'none' && result.pet.filter === 'none' &&
-          result.pet.boxShadow === 'none' && result.pet.pointerEvents === 'auto'
+        result.pet.visible && result.pet.width >= 80 && result.pet.height >= 80 &&
+        result.pet.viewportPresent && result.pet.controllerCount === 1 &&
+        result.pet.exportedController &&
+        result.pet.backgroundImage !== 'none' && result.pet.filter === 'none' &&
+        result.pet.boxShadow === 'none' && result.pet.pointerEvents === 'auto'
         )
+      )
       );
     result.pass = Boolean(commonPass && settingsPass && taskPass && homePass && petPass);
     result.softNotes = {

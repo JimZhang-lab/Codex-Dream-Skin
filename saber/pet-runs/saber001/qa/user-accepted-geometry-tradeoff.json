@@ -1,0 +1,9 @@
+{
+  "decision": "accepted",
+  "scope": "look-row-10 source registration",
+  "reason": "The user explicitly chose the current built-in result and declined an API-key or paid fallback. The final independent visual review confirms complete, visibly unclipped poses.",
+  "edge_pixel_threshold": 500,
+  "selected_source": "/Users/jim/.codex/generated_images/019f70e3-82ba-7551-b49e-fc7f8d8ed2ec/exec-6bed4324-73ae-4e47-9be2-765a8ebdb9ca.png",
+  "visual_qa": "pass",
+  "recorded_on": "2026-07-18"
+}
