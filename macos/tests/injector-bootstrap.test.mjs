@@ -3,7 +3,10 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
-import { earlyPayloadFor } from "../scripts/injector.mjs";
+import {
+  earlyPayloadFor,
+  recoveryOperationForExpiredPause,
+} from "../scripts/injector.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const injectorPath = path.resolve(here, "../scripts/injector.mjs");
@@ -80,6 +83,26 @@ assert.match(
   source,
   /const suggestionLabelColorsMatch = visibleSuggestionLabels\.every\([\s\S]{0,2500}visibleSuggestionLabels\.length >= result\.visibleCardCount[\s\S]{0,160}result\.suggestionLabelColorsMatch/,
   "Live verification must reject visible home suggestion labels that diverge from the themed card color.",
+);
+
+assert.deepEqual(
+  recoveryOperationForExpiredPause({ token: "pause-token", status: "pausing", message: "old" }),
+  {
+    token: "pause-token",
+    status: "failed",
+    message: "暂停超时，正在恢复原皮肤",
+  },
+  "An expired pause must become a failed pause recovery operation.",
+);
+assert.equal(
+  recoveryOperationForExpiredPause({ token: "apply-token", status: "applying" }),
+  null,
+  "An expired apply must not enter pause recovery.",
+);
+assert.match(
+  source,
+  /pauseRecoveryOperation = recoveryOperationForExpiredPause\(expiredOperation\);[\s\S]{0,180}restoreAfterAbortedPause\(pauseRecoveryOperation\)/,
+  "The watcher timeout branch must execute failed-pause recovery.",
 );
 
 console.log("PASS: early injection is shell-guarded, generation-safe, and removed on shutdown.");

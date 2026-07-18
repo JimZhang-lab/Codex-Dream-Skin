@@ -1201,6 +1201,15 @@ function isFreshBusyOperation(operation) {
   return ageSeconds >= -5 && ageSeconds <= maxAgeSeconds;
 }
 
+export function recoveryOperationForExpiredPause(operation) {
+  if (!operation || operation.status !== "pausing") return null;
+  return {
+    ...operation,
+    status: "failed",
+    message: "暂停超时，正在恢复原皮肤",
+  };
+}
+
 async function watchOperationState(statePath, onState) {
   if (!statePath) return () => {};
   const directory = path.dirname(statePath);
@@ -1568,10 +1577,8 @@ async function runWatch(options) {
             1000,
           );
         }));
-        if (expiredOperation.status === "pausing") {
-          controlOnly = true;
-          releaseControlSessions();
-        }
+        const pauseRecoveryOperation = recoveryOperationForExpiredPause(expiredOperation);
+        if (pauseRecoveryOperation) await restoreAfterAbortedPause(pauseRecoveryOperation);
       }
       if (controlOnly && !activeOperation) {
         releaseControlSessions();
