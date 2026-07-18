@@ -73,8 +73,28 @@ stage="$(/usr/bin/mktemp -d "$STATE_ROOT/.theme-switch.XXXXXX")"
 # descriptors. This closes the validation/copy TOCTOU window: after this
 # command returns, edits or symlink swaps in themes/<id> cannot mix the pair
 # that will be published to the live theme directory.
-THEME_IMAGE="$("$NODE" "$SCRIPT_DIR/stage-theme.mjs" "$SRC" "$stage")" \
+THEME_MANIFEST="$("$NODE" "$SCRIPT_DIR/stage-theme.mjs" "$SRC" "$stage")" \
   || fail "Theme pack changed or failed staging: $THEME_ID"
+THEME_IMAGE="$("$NODE" -e '
+  try {
+    const manifest = JSON.parse(process.argv[1]);
+    if (typeof manifest.image !== "string" || !Array.isArray(manifest.files) ||
+        !manifest.files.includes(manifest.image) ||
+        manifest.files.some((name) => typeof name !== "string" ||
+          !/^[^/\\]+$/.test(name) || /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u.test(name))) process.exit(1);
+    process.stdout.write(manifest.image);
+  } catch { process.exit(1); }
+' "$THEME_MANIFEST")" || fail "Theme pack returned an invalid staging manifest: $THEME_ID"
+THEME_FILES=()
+while IFS= read -r staged_file; do
+  [ -n "$staged_file" ] && THEME_FILES+=("$staged_file")
+done < <("$NODE" -e '
+  try {
+    const manifest = JSON.parse(process.argv[1]);
+    for (const name of manifest.files) process.stdout.write(`${name}\n`);
+  } catch { process.exit(1); }
+' "$THEME_MANIFEST") || fail "Theme pack returned unreadable staged files: $THEME_ID"
+[ "${#THEME_FILES[@]}" -gt 0 ] || fail "Theme pack contains no staged assets: $THEME_ID"
 # Validate the exact staged pair, not the mutable library directory. The
 # injector performs the full schema, path, dimensions, and image checks.
 "$NODE" "$INJECTOR" --check-payload --theme-dir "$stage" >/dev/null \
@@ -91,8 +111,22 @@ done
 # theme.json is the commit marker: the watcher never observes a config that
 # references a partially copied image.
 /bin/mv -f "$stage/theme.json" "$THEME_DIR/theme.json"
-/usr/bin/find "$THEME_DIR" -maxdepth 1 -type f \
-  ! -name 'theme.json' ! -name "$THEME_IMAGE" -delete
+# Remove only stale files after every declared asset has been published. A
+# rich preset can carry a scene, a foreground character, icons, and a pet in
+# addition to its main background; retaining only THEME_IMAGE would corrupt it.
+for entry in "$THEME_DIR"/*; do
+  [ -f "$entry" ] || continue
+  entry_name="$(/usr/bin/basename "$entry")"
+  [ "$entry_name" = "theme.json" ] && continue
+  keep_entry="false"
+  for staged_file in "${THEME_FILES[@]}"; do
+    if [ "$entry_name" = "$staged_file" ]; then
+      keep_entry="true"
+      break
+    fi
+  done
+  [ "$keep_entry" = "true" ] || /bin/rm -f "$entry"
+done
 /bin/rm -rf "$stage"
 stage=""
 

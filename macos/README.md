@@ -74,13 +74,43 @@ CDP is powerful and unauthenticated on loopback. Prefer Restore when you are don
 
 ## Bundled presets
 
-A fresh install seeds two tested presets into your theme library:
-**Gothic Void Crusade** and **桥本有菜 / Arina Hashimoto**. Gothic Void Crusade
+A fresh install seeds three tested presets into your theme library:
+**Gothic Void Crusade**, **桥本有菜 / Arina Hashimoto**, and the optional
+**Miku Pastel**. Gothic Void Crusade
 is the default when no active theme exists. Switch to Arina Hashimoto with:
 
 ```bash
 ~/.codex/codex-dream-skin-studio/scripts/switch-theme-macos.sh --id preset-arina-hashimoto
 ```
+
+Miku Pastel is also opt-in; it is never selected by installation or seeding:
+
+```bash
+~/.codex/codex-dream-skin-studio/scripts/switch-theme-macos.sh --id preset-miku-pastel
+```
+
+Unlike a background-only pack, this preset includes its own selected-only
+runtime and theme assets for the home layout, scene/character layers, card
+icons, light/dark treatment, and its in-window animated pet. Switching back
+to any other preset restores the shared runtime; it does not change the
+default theme or the user's existing `custom-*` packs.
+
+The native Codex pet is a separate optional install. It writes the current pet
+selection only when you run it (close Codex first); `--no-select` copies the
+files without changing the selection:
+
+```bash
+~/.codex/codex-dream-skin-studio/scripts/install-miku-pet-macos.sh
+# ~/.codex/codex-dream-skin-studio/scripts/install-miku-pet-macos.sh --no-select
+```
+
+The following are redacted, real runtime captures for this preset. They are
+documentation previews only, never theme backgrounds:
+
+![Miku Pastel light capture 0](../docs/images/presets/miku-pastel-running-light-0.png)
+![Miku Pastel light capture 1](../docs/images/presets/miku-pastel-running-light-1.png)
+![Miku Pastel dark capture 0](../docs/images/presets/miku-pastel-running-dark-0.png)
+![Miku Pastel dark capture 1](../docs/images/presets/miku-pastel-running-dark-1.png)
 
 The user-provided source PNG is `1672 × 941`. Its pack contains a standardized
 derived `2560 × 1440` JPEG plus theme metadata; the derived export does not add

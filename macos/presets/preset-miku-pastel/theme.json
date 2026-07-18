@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "preset-miku-pastel",
+  "preset": "miku-pastel",
+  "name": "Miku Pastel",
+  "brandSubtitle": "FUTURE BEATS · CODEX",
+  "tagline": "和未来旋律一起，把灵感写成代码。",
+  "projectPrefix": "选择项目 · ",
+  "projectLabel": "♫  选择项目",
+  "statusText": "MIKU THEME ONLINE",
+  "quote": "BE TOGETHER · BE FUTURE",
+  "image": "miku-pastel-wallpaper.png",
+  "scene": "background-hero.png",
+  "character": "miku.png",
+  "cardIcons": [
+    "01_code_icon.png",
+    "02_puzzle_icon.png",
+    "03_checklist_icon.png",
+    "04_tools_icon.png"
+  ],
+  "pet": {
+    "image": "miku-future-spritesheet.webp",
+    "spriteVersionNumber": 2,
+    "size": 128,
+    "replaceNativeOverlay": false
+  },
+  "colors": {
+    "background": "#ECFAFD",
+    "panel": "#FFFFFF",
+    "panelAlt": "#F6FDFF",
+    "accent": "#24C9C6",
+    "accentAlt": "#67E2DD",
+    "secondary": "#F29DD1",
+    "highlight": "#9B86EA",
+    "text": "#203941",
+    "muted": "#6A858E",
+    "line": "rgba(36, 201, 198, .28)"
+  }
+}

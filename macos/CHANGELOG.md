@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### 新增
+
+- 新增可选 `preset-miku-pastel`：选择该预设时才加载完整 Miku Pastel 首页、场景/角色层、卡片图标、浅深色视觉与窗口内动画 Pet；安装和播种不会切换默认 Gothic Void Crusade 主题。
+- 新增 `Install Miku Pet.command` 与 `install-miku-pet-macos.sh`。可将 v2 精灵表安装为原生 Codex 自定义宠物，并默认写入 `selected-avatar-id = "custom:miku-future"`；`--no-select` 只安装文件不改选择。
+- 主题切换现在会原子暂存并发布主题声明的全部图像资源，支持场景、角色、四张卡片图标与 v2 Pet 精灵表，不再只复制背景图。
+
+### 测试
+
+- 覆盖富主题资源暂存、Miku 预设播种/切换，以及自定义 Pet 选择的原子写入、备份与幂等行为。
+
 ## 1.2.0 — 2026-07-17
 
 ### 新增

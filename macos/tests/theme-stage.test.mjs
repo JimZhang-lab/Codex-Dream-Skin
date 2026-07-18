@@ -38,8 +38,8 @@ try {
     `${JSON.stringify({ schemaVersion: 1, id: "preset-race", name: "A", image: "background-a.png" })}\n`,
   );
 
-  const imageName = await runStage(source, stage);
-  assert.equal(imageName, "background-a.png");
+  const manifest = JSON.parse(await runStage(source, stage));
+  assert.deepEqual(manifest, { image: "background-a.png", files: ["background-a.png"] });
   const stagedConfig = JSON.parse(await fs.readFile(path.join(stage, "theme.json"), "utf8"));
   assert.equal(stagedConfig.image, "background-a.png");
   const stagedBeforeMutation = await fs.readFile(path.join(stage, "background-a.png"));
@@ -55,6 +55,30 @@ try {
   await fs.writeFile(path.join(source, "background-a.png"), Buffer.from("changed-after-stage"));
   assert.deepEqual(await fs.readFile(path.join(stage, "background-a.png")), stagedBeforeMutation);
   assert.equal(JSON.parse(await fs.readFile(path.join(stage, "theme.json"), "utf8")).name, "A");
+
+  const richSource = path.join(tempRoot, "themes", "preset-rich");
+  const richStage = path.join(tempRoot, "rich-stage");
+  await fs.mkdir(richSource, { recursive: true });
+  await fs.mkdir(richStage);
+  const richFiles = ["background.png", "scene.png", "character.png", "one.png", "two.png", "three.png", "four.png", "pet.webp"];
+  await Promise.all(richFiles.map((file) => fs.copyFile(fixtureAsset, path.join(richSource, file))));
+  await fs.writeFile(
+    path.join(richSource, "theme.json"),
+    `${JSON.stringify({
+      schemaVersion: 1,
+      id: "preset-rich",
+      image: "background.png",
+      scene: "scene.png",
+      character: "character.png",
+      cardIcons: ["one.png", "two.png", "three.png", "four.png"],
+      pet: { image: "pet.webp", spriteVersionNumber: 2 },
+    })}\n`,
+  );
+  const richManifest = JSON.parse(await runStage(richSource, richStage));
+  assert.deepEqual(richManifest.files, richFiles);
+  await Promise.all(richFiles.map(async (file) => {
+    assert.deepEqual(await fs.readFile(path.join(richStage, file)), await fs.readFile(path.join(richSource, file)));
+  }));
 
   const outside = path.join(tempRoot, "outside.png");
   await fs.copyFile(fixtureAsset, outside);

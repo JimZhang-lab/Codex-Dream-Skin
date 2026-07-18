@@ -6,14 +6,15 @@
 
 ## 内置实测预设
 
-当前内置 `preset-gothic-void-crusade/`（Gothic Void Crusade）与
-`preset-arina-hashimoto/`（桥本有菜 / Arina Hashimoto）两套实机验证主题。
-前者是社区作者提供的原创哥特科幻背景；后者使用一张
+当前内置 `preset-gothic-void-crusade/`（Gothic Void Crusade）、
+`preset-arina-hashimoto/`（桥本有菜 / Arina Hashimoto）与
+`preset-miku-pastel/`（Miku Pastel）三套实机验证主题。
+Gothic Void Crusade 是社区作者提供的原创哥特科幻背景；Arina Hashimoto 使用一张
 `2560 × 1440`（16:9）纯背景：左侧低信息留白承载 Codex 原生标题，人物和花卉主视觉集中在右侧。浅色与暗色截图均来自真实 Codex 注入，不是 AI 绘制的整窗 UI。
 
 来源尺寸必须如实区分：归档的用户源图（不随 preset 播种）是 `1672 × 941` PNG；preset 内的 `background.jpg` 保持其近 16:9 构图，标准化导出为 `2560 × 1440` JPEG，并不代表补回或新增了源图细节。派生文件使用 `sips -z 1440 2560 -s format jpeg -s formatOptions 90` 生成。
 
-- 可导入/可播种的主题素材只有 [`background.jpg`](./preset-arina-hashimoto/background.jpg) 与 [`theme.json`](./preset-arina-hashimoto/theme.json)。
+- 可导入/可播种的普通主题素材只有 [`background.jpg`](./preset-arina-hashimoto/background.jpg) 与 [`theme.json`](./preset-arina-hashimoto/theme.json)。
 - 用户提供的 byte-identical 源 PNG 单独归档在 [`docs/images/presets/arina-hashimoto-source.png`](../../docs/images/presets/arina-hashimoto-source.png)，不放进 preset pack，因此不会被安装脚本播种为多余文件。
 - 当前浅色、暗色实测文档截图均为 `2308 × 1572` Retina JPEG（CSS viewport `1154 × 786`），来自同一真实 Codex 首页；为保护未发送草稿，截图时仅用临时本地样式隐藏输入文字并收起编辑区，没有修改草稿内容或伪造皮肤效果。它们包含真实侧栏、项目工具栏和输入框，**只作预览，绝不能当背景导入**。
 - 背景是用户提供的 AI 生成示例，不代表 OpenAI/Codex 官方视觉或背书；公开分发前仍需确认人物、模型输出与素材使用权。
@@ -34,9 +35,17 @@ preset-<slug>/
 └── background.jpg    # 背景图（横向，JPEG）
 ```
 
+`preset-miku-pastel/` 是一个特例：它仍使用同样的平铺目录与
+`preset-<slug>` / `id` 命名，但 `theme.json` 明确声明额外的 `scene`、
+`character`、四个 `cardIcons` 和 v2 `pet` 图像。仅在
+`preset: "miku-pastel"` 被选中时，注入器才会加载该目录的 Miku 运行时；默认及
+其他预设继续使用共享运行时。切换器会对 `theme.json` 声明的每个资源进行
+同一次无符号链接、稳定描述符暂存，并最后发布 `theme.json`。
+
 - 目录名与 `theme.json` 的 `id` **必须**都是 `preset-<slug>` 形式（`slug` 用小写英文 + 连字符）。播种只管理 `preset-*`，绝不会碰用户自己「换一张图」保存的 `custom-*` 主题。
 - `image` 字段只能是**本目录内**的文件名（不能是路径），格式 `png` / `jpg` / `jpeg` / `webp`，≤ 16 MB（建议 < 1 MB）。
 - 人物/场景背景优先提交 `2560 × 1440`（16:9）母版；主视觉放在右侧约 58%～88%，左侧约 50%～58% 保持低信息、低对比。禁止把效果截图、窗口 mockup 或任何带 UI 的图片命名为 `background.*`。
+- 运行截图只能放在 `docs/images/presets/` 作为真实验证证据；不可作为 `image`、`scene`、`character`、卡片图标或 Pet 资源引用。
 
 ## 素材红线（务必阅读）
 
@@ -54,6 +63,10 @@ preset-<slug>/
 - ❌ 任何你无权再分发的第三方素材。
 
 提交预设即视为你声明：对该素材拥有分发与再授权的权利。
+
+对于任何可识别角色素材，PR 还必须在描述中提供可公开核验的授权依据，或
+维护者已经批准并在 `NOTICE.md` 记录的例外；仅有软件代码许可证并不等于
+角色、商标或美术资源的再分发授权。
 
 ## 贡献方式
 

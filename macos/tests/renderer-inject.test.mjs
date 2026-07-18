@@ -8,6 +8,21 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const macosRoot = path.resolve(here, "..");
 const template = await fs.readFile(path.join(macosRoot, "assets", "renderer-inject.js"), "utf8");
 const css = await fs.readFile(path.join(macosRoot, "assets", "dream-skin.css"), "utf8");
+const mikuTemplate = await fs.readFile(
+  path.join(macosRoot, "presets", "preset-miku-pastel", "miku-renderer-inject.js"),
+  "utf8",
+);
+
+assert.match(
+  mikuTemplate,
+  /const PAYLOAD_REVISION = __DREAM_SKIN_PAYLOAD_REVISION_JSON__;/,
+  "The selected-only Miku runtime must consume the current payload revision.",
+);
+assert.match(
+  mikuTemplate,
+  /revision: PAYLOAD_REVISION/,
+  "The selected-only Miku runtime must publish its revision for live verification.",
+);
 
 assert.doesNotMatch(
   css,

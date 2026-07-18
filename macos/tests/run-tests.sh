@@ -56,6 +56,7 @@ fi
 "$NODE" "$ROOT/tests/injector-bootstrap.test.mjs"
 "$NODE" "$ROOT/tests/renderer-inject.test.mjs"
 "$NODE" "$ROOT/tests/theme-stage.test.mjs"
+"$NODE" "$ROOT/tests/select-custom-pet.test.mjs"
 
 # Every bundled preset must be a valid, injectable theme pack with a preset-* id.
 for preset in "$ROOT"/presets/preset-*/; do
@@ -195,10 +196,13 @@ fi
   [ -f "$themes/preset-gothic-void-crusade/background.jpg" ] || exit 1
   [ -f "$themes/preset-arina-hashimoto/theme.json" ] || exit 1
   [ -f "$themes/preset-arina-hashimoto/background.jpg" ] || exit 1
+  [ -f "$themes/preset-miku-pastel/theme.json" ] || exit 1
+  [ -f "$themes/preset-miku-pastel/miku.png" ] || exit 1
+  [ -f "$themes/preset-miku-pastel/miku-future-spritesheet.webp" ] || exit 1
   [ -f "$themes/custom-keepme/theme.json" ] || exit 1
   for id in $retired; do [ ! -e "$themes/$id" ] || exit 1; done
   seeded="$(/usr/bin/find "$themes" -maxdepth 1 -type d -name "preset-*" | /usr/bin/wc -l | /usr/bin/tr -d " ")"
-  [ "$seeded" -eq 2 ] || exit 1
+  [ "$seeded" -eq 3 ] || exit 1
 ' _ "$ROOT"
 
 # Theme switches stage files and publish theme.json last, preserving a complete
@@ -229,6 +233,23 @@ fi
   if (theme.id !== "preset-switch-fixture" || theme.name !== "切换测试") process.exit(1);
 ' "$SWITCH_STATE/theme/theme.json"
 [ -z "$(/usr/bin/find "$SWITCH_STATE" -maxdepth 1 -name '.theme-switch.*' -print -quit)" ]
+
+# Rich preset switches must retain every referenced scene/character/icon/pet
+# asset; publishing only the background would make the Miku runtime incomplete.
+/bin/mkdir -p "$SWITCH_STATE/themes/preset-miku-pastel"
+/bin/cp "$ROOT/presets/preset-miku-pastel/"* "$SWITCH_STATE/themes/preset-miku-pastel/"
+/usr/bin/env HOME="$SWITCH_HOME" NODE="$NODE" \
+  "$ROOT/scripts/switch-theme-macos.sh" --id preset-miku-pastel --no-apply >/dev/null
+[ -f "$SWITCH_STATE/theme/background-hero.png" ]
+[ -f "$SWITCH_STATE/theme/miku.png" ]
+[ -f "$SWITCH_STATE/theme/miku-future-spritesheet.webp" ]
+[ -f "$SWITCH_STATE/theme/01_code_icon.png" ]
+"$NODE" -e '
+  const fs = require("fs");
+  const theme = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+  if (theme.id !== "preset-miku-pastel" || theme.preset !== "miku-pastel" ||
+      theme.cardIcons?.length !== 4 || theme.pet?.spriteVersionNumber !== 2) process.exit(1);
+' "$SWITCH_STATE/theme/theme.json"
 
 RUNTIME_HOME="$TMP/runtime-home"
 RUNTIME_STATE_ROOT="$RUNTIME_HOME/Library/Application Support/CodexDreamSkinStudio"

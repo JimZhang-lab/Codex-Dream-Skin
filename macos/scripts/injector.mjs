@@ -126,7 +126,9 @@ const OPERATION_UI_CSS = `
     }
   }
 `;
-let staticPayloadAssets = null;
+const MIKU_PRESET_ID = "miku-pastel";
+const MIKU_RUNTIME_DIR = path.join(root, "presets", "preset-miku-pastel");
+const staticPayloadAssets = new Map();
 let operationSequence = 0;
 
 function parseArgs(argv) {
@@ -452,6 +454,17 @@ async function loadTheme(themeDir) {
     throw new Error(`${configPath} has an invalid image field`);
   }
   if (path.basename(raw.image) !== raw.image) throw new Error("Theme image must stay inside its theme directory");
+  const imageName = (value, name) => {
+    if (value === undefined || value === null || value === "") return null;
+    if (typeof value !== "string" || /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u.test(value)) {
+      throw new Error(`${configPath} has an invalid ${name} field`);
+    }
+    const normalized = value.trim();
+    if (!normalized || path.basename(normalized) !== normalized || normalized === "theme.json") {
+      throw new Error(`Theme ${name} must stay inside its theme directory`);
+    }
+    return normalized;
+  };
   const text = (value, fallback, max, name) => {
     if (value === undefined) return fallback;
     if (typeof value !== "string" || /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u.test(value)) {
@@ -487,6 +500,9 @@ async function loadTheme(themeDir) {
     "highlight", "text", "muted", "line",
   ];
   const appearance = choice(raw.appearance, "appearance", ["auto", "light", "dark"]);
+  const preset = raw.preset === undefined
+    ? "classic"
+    : choice(raw.preset, "preset", ["classic", MIKU_PRESET_ID]);
   if (raw.art !== undefined && (!raw.art || typeof raw.art !== "object" || Array.isArray(raw.art))) {
     throw new Error(`${configPath} has an invalid art field`);
   }
@@ -497,9 +513,40 @@ async function loadTheme(themeDir) {
     safeArea: choice(rawArt.safeArea, "art.safeArea", ["auto", "left", "right", "center", "none"]),
     taskMode: choice(rawArt.taskMode, "art.taskMode", ["auto", "ambient", "banner", "off"]),
   };
+  const scene = imageName(raw.scene, "scene");
+  const character = imageName(raw.character, "character");
+  if (raw.cardIcons !== undefined && (!Array.isArray(raw.cardIcons) || raw.cardIcons.length !== 4)) {
+    throw new Error(`${configPath} has an invalid cardIcons field`);
+  }
+  const cardIcons = raw.cardIcons ? raw.cardIcons.map((value, index) => {
+    const filename = imageName(value, `cardIcons[${index}]`);
+    if (!filename) throw new Error(`${configPath} has an invalid cardIcons field`);
+    return filename;
+  }) : [];
+  if (new Set(cardIcons).size !== cardIcons.length) {
+    throw new Error(`${configPath} has duplicate cardIcons entries`);
+  }
+  if (raw.pet !== undefined && (!raw.pet || typeof raw.pet !== "object" || Array.isArray(raw.pet))) {
+    throw new Error(`${configPath} has an invalid pet field`);
+  }
+  const rawPet = raw.pet ?? null;
+  const petImage = imageName(rawPet?.image, "pet.image");
+  if (rawPet && !petImage) throw new Error(`${configPath} has an invalid pet.image field`);
+  if (petImage && rawPet.spriteVersionNumber !== 2) {
+    throw new Error(`${configPath} pet requires spriteVersionNumber 2`);
+  }
+  if (rawPet?.size !== undefined && (
+    typeof rawPet.size !== "number" || !Number.isFinite(rawPet.size) || rawPet.size < 80 || rawPet.size > 176
+  )) {
+    throw new Error(`${configPath} has an invalid pet.size field`);
+  }
+  if (rawPet?.replaceNativeOverlay !== undefined && typeof rawPet.replaceNativeOverlay !== "boolean") {
+    throw new Error(`${configPath} has an invalid pet.replaceNativeOverlay field`);
+  }
   const theme = {
     schemaVersion: 1,
     id: text(raw.id, "custom", 80, "id"),
+    preset,
     name: text(raw.name, "ChatGPT Dream Skin", 80, "name"),
     brandSubtitle: text(raw.brandSubtitle, "CODEX DREAM SKIN", 80, "brandSubtitle"),
     tagline: text(raw.tagline, "Make something wonderful.", 160, "tagline"),
@@ -508,6 +555,15 @@ async function loadTheme(themeDir) {
     statusText: text(raw.statusText, "DREAM SKIN ONLINE", 80, "statusText"),
     quote: text(raw.quote, "MAKE SOMETHING WONDERFUL", 80, "quote"),
     image: raw.image,
+    scene,
+    character,
+    cardIcons,
+    pet: petImage ? {
+      image: petImage,
+      spriteVersionNumber: 2,
+      size: rawPet.size ?? 128,
+      replaceNativeOverlay: rawPet.replaceNativeOverlay ?? false,
+    } : null,
     colorMode: rawColors ? "explicit" : "auto",
     explicitColorKeys: rawColors ? colorKeys.filter((key) => Object.hasOwn(rawColors, key)) : [],
     colors: {
@@ -527,74 +583,120 @@ async function loadTheme(themeDir) {
   if (Object.values(art).some((value) => value !== undefined)) {
     theme.art = Object.fromEntries(Object.entries(art).filter(([, value]) => value !== undefined));
   }
-  const requestedImagePath = path.join(assetsRoot, theme.image);
-  let imagePath;
-  try {
-    imagePath = await fs.realpath(requestedImagePath);
-  } catch (error) {
-    if (error.code === "ENOENT") throw new Error(`Theme image is missing: ${requestedImagePath}`);
-    throw error;
-  }
-  assertContainedPath(assetsRoot, imagePath, "Theme image");
-  const imageStat = await fs.stat(imagePath);
-  const extension = path.extname(theme.image).toLowerCase();
-  if (![".png", ".jpg", ".jpeg", ".webp"].includes(extension)) {
-    throw new Error(`Unsupported theme image format: ${extension || "missing"}`);
-  }
-  let imageHandle;
-  try {
-    imageHandle = await fs.open(imagePath, fsConstants.O_RDONLY | (fsConstants.O_NOFOLLOW ?? 0));
-  } catch (error) {
-    if (error.code === "ELOOP") throw new Error("Theme image changed into a symbolic link while loading");
-    throw error;
-  }
-  try {
-    const openedStat = await imageHandle.stat();
-    if (
-      !imageStat.isFile()
-      || !openedStat.isFile()
-      || imageStat.dev !== openedStat.dev
-      || imageStat.ino !== openedStat.ino
-      || openedStat.size < 1
-      || openedStat.size > MAX_ART_BYTES
-    ) {
-      throw new Error(`Theme image must be a stable non-empty file no larger than ${MAX_ART_BYTES} bytes`);
+  const loadImage = async (filename, label) => {
+    if (!filename) return null;
+    const requestedImagePath = path.join(assetsRoot, filename);
+    let imagePath;
+    try {
+      imagePath = await fs.realpath(requestedImagePath);
+    } catch (error) {
+      if (error.code === "ENOENT") throw new Error(`${label} is missing: ${requestedImagePath}`);
+      throw error;
     }
-    const art = await imageHandle.readFile();
-    if (art.length < 1 || art.length > MAX_ART_BYTES) {
-      throw new Error(`Theme image must be a non-empty file no larger than ${MAX_ART_BYTES} bytes`);
+    assertContainedPath(assetsRoot, imagePath, label);
+    const extension = path.extname(filename).toLowerCase();
+    if (![".png", ".jpg", ".jpeg", ".webp"].includes(extension)) {
+      throw new Error(`Unsupported ${label.toLowerCase()} format: ${extension || "missing"}`);
     }
-    return { art, assetsRoot, extension, imagePath, theme };
-  } finally {
-    await imageHandle.close();
-  }
+    let handle;
+    try {
+      handle = await fs.open(imagePath, fsConstants.O_RDONLY | (fsConstants.O_NOFOLLOW ?? 0));
+    } catch (error) {
+      if (error.code === "ELOOP") throw new Error(`${label} changed into a symbolic link while loading`);
+      throw error;
+    }
+    try {
+      const before = await handle.stat();
+      if (!before.isFile() || before.size < 1 || before.size > MAX_ART_BYTES) {
+        throw new Error(`${label} must be a stable non-empty file no larger than ${MAX_ART_BYTES} bytes`);
+      }
+      const bytes = await handle.readFile();
+      const after = await handle.stat();
+      if (
+        !after.isFile() || before.dev !== after.dev || before.ino !== after.ino ||
+        before.size !== after.size || before.mtimeMs !== after.mtimeMs || before.ctimeMs !== after.ctimeMs ||
+        bytes.length < 1 || bytes.length > MAX_ART_BYTES
+      ) {
+        throw new Error(`${label} changed while it was being loaded`);
+      }
+      return { bytes, extension, imagePath, stat: after };
+    } finally {
+      await handle.close();
+    }
+  };
+  const [background, sceneImage, characterImage, petImageFile, ...cardIconImages] = await Promise.all([
+    loadImage(theme.image, "Theme image"),
+    loadImage(theme.scene, "Theme scene image"),
+    loadImage(theme.character, "Theme character image"),
+    loadImage(theme.pet?.image, "Theme pet image"),
+    ...theme.cardIcons.map((filename, index) => loadImage(filename, `Theme card icon ${index + 1}`)),
+  ]);
+  return {
+    art: background.bytes,
+    assetsRoot,
+    extension: background.extension,
+    imagePath: background.imagePath,
+    scene: sceneImage?.bytes ?? null,
+    scenePath: sceneImage?.imagePath ?? null,
+    character: characterImage?.bytes ?? null,
+    characterPath: characterImage?.imagePath ?? null,
+    pet: petImageFile?.bytes ?? null,
+    petPath: petImageFile?.imagePath ?? null,
+    cardIcons: cardIconImages.map((image) => image.bytes),
+    cardIconPaths: cardIconImages.map((image) => image.imagePath),
+    theme,
+  };
 }
 
-async function loadStaticPayloadAssets() {
-  const cacheHit = Boolean(staticPayloadAssets);
-  if (!staticPayloadAssets) {
-    staticPayloadAssets = Promise.all([
-      fs.readFile(path.join(root, "assets", "dream-skin.css"), "utf8"),
-      fs.readFile(path.join(root, "assets", "renderer-inject.js"), "utf8"),
+function staticPayloadPaths(preset) {
+  if (preset === MIKU_PRESET_ID) {
+    return {
+      cacheKey: MIKU_PRESET_ID,
+      cssPath: path.join(MIKU_RUNTIME_DIR, "miku-dream-skin.css"),
+      templatePath: path.join(MIKU_RUNTIME_DIR, "miku-renderer-inject.js"),
+    };
+  }
+  return {
+    cacheKey: "classic",
+    cssPath: path.join(root, "assets", "dream-skin.css"),
+    templatePath: path.join(root, "assets", "renderer-inject.js"),
+  };
+}
+
+async function loadStaticPayloadAssets(preset) {
+  const paths = staticPayloadPaths(preset);
+  const cached = staticPayloadAssets.get(paths.cacheKey);
+  const cacheHit = Boolean(cached);
+  if (!cached) {
+    const pending = Promise.all([
+      fs.readFile(paths.cssPath, "utf8"),
+      fs.readFile(paths.templatePath, "utf8"),
     ]).catch((error) => {
-      staticPayloadAssets = null;
+      staticPayloadAssets.delete(paths.cacheKey);
       throw error;
     });
+    staticPayloadAssets.set(paths.cacheKey, pending);
   }
-  const [css, template] = await staticPayloadAssets;
+  const [css, template] = await staticPayloadAssets.get(paths.cacheKey);
   return { css, template, cacheHit };
 }
 
 function invalidateStaticPayloadAssets() {
-  staticPayloadAssets = null;
+  staticPayloadAssets.clear();
+}
+
+function imageDataUrl(bytes, filename) {
+  if (!bytes?.length || !filename) return "";
+  const extension = path.extname(filename).toLowerCase();
+  const mime = extension === ".jpg" || extension === ".jpeg" ? "image/jpeg"
+    : extension === ".webp" ? "image/webp" : "image/png";
+  return `data:${mime};base64,${bytes.toString("base64")}`;
 }
 
 async function loadPayload(themeDir) {
   const startedAt = performance.now();
-  const [staticAssets, loaded] = await Promise.all([
-    loadStaticPayloadAssets(),
-    loadTheme(themeDir),
-  ]);
+  const loaded = await loadTheme(themeDir);
+  const staticAssets = await loadStaticPayloadAssets(loaded.theme.preset);
   const { css, template } = staticAssets;
   const { art, extension, theme } = loaded;
   const styleRevision = createHash("sha256").update(css).digest("hex").slice(0, 20);
@@ -605,9 +707,18 @@ async function loadPayload(themeDir) {
   const artKey = createHash("sha256").update(art).digest("hex").slice(0, 20);
   theme.artMetadata = artMetadata;
   theme.artKey = artKey;
-  const mime = extension === ".jpg" || extension === ".jpeg" ? "image/jpeg"
-    : extension === ".webp" ? "image/webp" : "image/png";
-  const artDataUrl = `data:${mime};base64,${art.toString("base64")}`;
+  theme.assetKey = createHash("sha256")
+    .update(loaded.scene ?? Buffer.alloc(0))
+    .update(loaded.character ?? Buffer.alloc(0))
+    .update(loaded.pet ?? Buffer.alloc(0))
+    .update(Buffer.concat(loaded.cardIcons))
+    .digest("hex")
+    .slice(0, 20);
+  const artDataUrl = imageDataUrl(art, loaded.imagePath);
+  const sceneDataUrl = imageDataUrl(loaded.scene, loaded.scenePath);
+  const characterDataUrl = imageDataUrl(loaded.character, loaded.characterPath);
+  const petDataUrl = imageDataUrl(loaded.pet, loaded.petPath);
+  const cardIconDataUrls = loaded.cardIcons.map((bytes, index) => imageDataUrl(bytes, loaded.cardIconPaths[index]));
   const revision = createHash("sha256")
     .update(SKIN_VERSION)
     .update(css)
@@ -618,12 +729,24 @@ async function loadPayload(themeDir) {
   const payload = template
     .replace("__DREAM_SKIN_CSS_JSON__", JSON.stringify(css))
     .replace("__DREAM_SKIN_ART_JSON__", JSON.stringify(artDataUrl))
+    .replace("__DREAM_SKIN_SCENE_JSON__", JSON.stringify(sceneDataUrl))
+    .replace("__DREAM_SKIN_CHARACTER_JSON__", JSON.stringify(characterDataUrl))
+    .replace("__DREAM_SKIN_CARD_ICONS_JSON__", JSON.stringify(cardIconDataUrls))
+    .replace("__DREAM_SKIN_PET_JSON__", JSON.stringify(petDataUrl))
     .replace("__DREAM_SKIN_THEME_JSON__", JSON.stringify(theme))
     .replace("__DREAM_SKIN_VERSION_JSON__", JSON.stringify(SKIN_VERSION))
     .replace("__DREAM_SKIN_STYLE_REVISION_JSON__", JSON.stringify(styleRevision))
     .replace("__DREAM_SKIN_PAYLOAD_REVISION_JSON__", JSON.stringify(revision));
+  const unresolved = payload.match(/__DREAM_SKIN_[A-Z0-9_]+__/g);
+  if (unresolved?.length) {
+    throw new Error(`Renderer template has unresolved placeholders: ${[...new Set(unresolved)].join(", ")}`);
+  }
   return {
     imageBytes: art.length,
+    sceneBytes: loaded.scene?.length ?? 0,
+    characterBytes: loaded.character?.length ?? 0,
+    petBytes: loaded.pet?.length ?? 0,
+    cardIconBytes: loaded.cardIcons.map((bytes) => bytes.length),
     payload,
     revision,
     theme,

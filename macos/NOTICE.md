@@ -17,6 +17,24 @@ It does **not** grant rights to:
 
 `assets/portal-hero.png` is original abstract geometric art generated for this open-source repository (no characters). Replace it with your own image before shipping a branded theme to customers.
 
+## Miku Pastel theme and Miku Future pet
+
+The images under `presets/preset-miku-pastel/`, the `pets/miku-future`
+package, and the matching runtime screenshots under
+`../docs/images/presets/` are contributor-supplied optional theme material.
+They are excluded from the MIT software license and are not official
+OpenAI/Codex artwork.
+
+The optional `pets/miku-future` package was ported from
+[`HeiGeAi/heige-codex-skin-studio`](https://github.com/HeiGeAi/heige-codex-skin-studio)
+at commit `37091c1ebbf84d45a000cac793ab4885f04d108a`. That repository's MIT
+license covers its software, but does not grant rights to Hatsune Miku
+trademarks, character designs, or artwork. The preset and pet names do not
+imply participation, approval, or endorsement by the relevant rights holders.
+Downstream redistribution and commercial use require an independent rights
+review; the four runtime screenshots are documentation previews and must
+never be imported as theme assets.
+
 ## Arina Hashimoto reference material
 
 The following user/maintainer-supplied files are excluded from the MIT software license:
